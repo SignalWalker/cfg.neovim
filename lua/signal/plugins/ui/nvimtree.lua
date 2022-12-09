@@ -24,7 +24,7 @@ return function()
         root_dirs = {},
         prefer_startup_root = false,
         sync_root_with_cwd = true,
-        respect_buf_cwd = false,
+        respect_buf_cwd = true,
         hijack_directories = {
             enable = true,
             auto_open = true,

@@ -175,9 +175,11 @@ M.nvimtree = require('signal.plugins.ui.nvimtree')
 function M.project()
     require('project_nvim').setup {
         exclude_dirs = { "~/.local/share/cargo/*" },
-        scope_chdir = 'global'
+        scope_chdir = 'win',
+        ignore_lsp = { "sumneko_lua" },
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix" },
     }
-	local ts = require('telescope')
+    local ts = require('telescope')
     ts.load_extension('projects')
     vim.keymap.set('n', '<Leader>ffp', ts.extensions.projects.projects, { desc = 'telescope :: projects' })
 end
