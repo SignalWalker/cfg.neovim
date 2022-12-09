@@ -8,8 +8,8 @@ return function()
 
         open_on_setup = false,
         open_on_setup_file = false,
-
         ignore_ft_on_setup = { 'startify', 'alpha' },
+
         ignore_buf_on_tab_change = {},
 
         auto_reload_on_write = true,
@@ -92,6 +92,12 @@ return function()
                 close_window = true,
             },
             use_system_clipboard = true,
+        },
+        tab = {
+            sync = {
+                open = true,
+                close = true
+            }
         },
         log = {
             enable = false,
