@@ -51,6 +51,7 @@ return function()
             adaptive_size = false,
             centralize_selection = false,
             hide_root_folder = false,
+            preserve_window_proportions = true
         },
         renderer = {
             add_trailing = false,
