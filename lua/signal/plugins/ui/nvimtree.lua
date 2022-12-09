@@ -81,7 +81,7 @@ return function()
                 }
             },
             remove_file = {
-                close_window = false,
+                close_window = true,
             },
             use_system_clipboard = true,
         },
