@@ -16,4 +16,4 @@ vim.opt.backupskip:append('*~')
 vim.opt.updatetime = 300
 vim.opt.timeoutlen = 500
 
-vim.g.python3_host_prog = '/usr/bin/python3'
+vim.g.python3_host_prog = '/usr/bin/env python3'
