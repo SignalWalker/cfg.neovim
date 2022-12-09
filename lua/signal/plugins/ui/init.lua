@@ -10,7 +10,8 @@ function M.notify()
         stages = 'static',
         fps = 120,
     }
-	local ts = require('telescope')
+    vim.notify = notify
+    local ts = require('telescope')
     ts.load_extension("notify")
     vim.keymap.set('n', '<Leader>fvn', ts.extensions.notify.notify, { desc = 'telescope :: notifications' })
 end
