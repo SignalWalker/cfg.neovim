@@ -5,7 +5,7 @@ return function()
     require 'nvim-tree'.setup {
         disable_netrw = true,
         hijack_netrw = true,
-        open_on_setup = true,
+        open_on_setup = false,
         open_on_setup_file = false,
         ignore_ft_on_setup = { 'startify', 'alpha' },
         ignore_buf_on_tab_change = {},
@@ -34,11 +34,13 @@ return function()
         diagnostics = {
             enable = true,
             show_on_dirs = true,
+            show_on_open_dirs = false,
         },
         git = {
             enable = true,
             ignore = true,
             show_on_dirs = true,
+            show_on_open_dirs = false,
         },
         filesystem_watchers = {
             enable = true
@@ -65,7 +67,7 @@ return function()
         },
         filters = {
             dotfiles = true,
-            exclude = { '.gitignore' }
+            exclude = { '.gitignore', '.well-known' }
         },
         actions = {
             change_dir = {
