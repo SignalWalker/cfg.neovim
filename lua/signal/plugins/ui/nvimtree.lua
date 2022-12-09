@@ -5,18 +5,25 @@ return function()
     require 'nvim-tree'.setup {
         disable_netrw = true,
         hijack_netrw = true,
+
         open_on_setup = false,
         open_on_setup_file = false,
+
         ignore_ft_on_setup = { 'startify', 'alpha' },
         ignore_buf_on_tab_change = {},
+
         auto_reload_on_write = true,
+        reload_on_bufenter = true,
+
         create_in_closed_folder = true,
+
         sort_by = 'extension',
+
         hijack_cursor = true,
+
         root_dirs = {},
         prefer_startup_root = false,
         sync_root_with_cwd = true,
-        reload_on_bufenter = true,
         respect_buf_cwd = false,
         hijack_directories = {
             enable = true,
