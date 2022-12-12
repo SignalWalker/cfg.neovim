@@ -3,6 +3,7 @@ local M = {}
 function M.rust_tools()
     require('rust-tools').setup {
         server = {
+            cmd = { "/home/ash/.local/bin/rust-analyzer" }, -- neovide can't find it in $PATH for some reason, so...
             on_attach = SIGNAL_LSP_ON_ATTACH(true),
             imports = {
                 granularity = {
