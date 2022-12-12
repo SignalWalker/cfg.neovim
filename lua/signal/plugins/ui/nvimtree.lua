@@ -15,8 +15,6 @@ return function()
         auto_reload_on_write = true,
         reload_on_bufenter = true,
 
-        create_in_closed_folder = true,
-
         sort_by = 'extension',
 
         hijack_cursor = true,
