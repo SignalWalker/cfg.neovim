@@ -39,7 +39,7 @@ function M.crates()
     require('crates').setup {
         src = {
             coq = {
-                enable = true,
+                enabled = true,
                 name = "crates.nvim"
             }
         }
