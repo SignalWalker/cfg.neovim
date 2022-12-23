@@ -15,7 +15,10 @@ in {
   options = with lib; {
     programs.ashvim = {
       enable = mkEnableOption "Ash Walker's Neovim configuration";
-      package = (mkPackageOption "neovim") // {default = inputs.neovim.packages.${pkgs.system}.neovim;};
+      package = mkOption {
+        type = types.package;
+        default = inputs.neovim.packages.${pkgs.system}.neovim;
+      };
     };
   };
   disabledModules = [];
