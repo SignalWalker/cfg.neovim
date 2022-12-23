@@ -19,6 +19,9 @@ in {
         type = types.package;
         default = inputs.neovim.packages.${pkgs.system}.neovim;
       };
+      settings = {
+        enable = (mkEnableOption "install ashvim configuration") // {default = config.system.isNixOS or false;};
+      };
     };
   };
   disabledModules = [];
@@ -30,14 +33,16 @@ in {
         ++ (with pkgs; [
           tree-sitter
         ]);
-      xdg.configFile."nvim" = {
-        source = toString self;
-        recursive = false;
-      };
     }
     (lib.mkIf (config ? signal.dev.editor.editors) {
       signal.dev.editor.editors."neovim" = {
         cmd.term = "nvim";
+      };
+    })
+    (lib.mkIf nvim.settings.enable {
+      xdg.configFile."nvim" = {
+        source = toString self;
+        recursive = false;
       };
     })
   ]);
