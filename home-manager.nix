@@ -10,15 +10,15 @@ inputs @ {
 }:
 with builtins; let
   std = pkgs.lib;
-  nvim = config.programs.neovim;
+  nvim = config.programs.ashvim;
 in {
   options = with lib; {
-    programs.neovim = {
+    programs.ashvim = {
       enable = mkEnableOption "Ash Walker's Neovim configuration";
-      package = mkPackageOption "neovim";
+      package = (mkPackageOption "neovim") // {default = inputs.neovim.packages.${pkgs.system}.neovim;};
     };
   };
-  disabledModules = [<home-manager/modules/programs/neovim.nix>];
+  disabledModules = [];
   imports = [];
   config = lib.mkIf nvim.enable (lib.mkMerge [
     {

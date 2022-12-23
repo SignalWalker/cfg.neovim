@@ -209,6 +209,12 @@ local packages = {
             'nvim-orgmode/orgmode',
             requires = { 'nvim-treesitter/nvim-treesitter' },
             after = { 'nvim-treesitter' }
+        },
+        tree_sitter_just = {
+            'IndianBoy42/tree-sitter-just',
+            requires = {
+                'nvim-treesitter/nvim-treesitter'
+            },
         }
     },
     theme = {

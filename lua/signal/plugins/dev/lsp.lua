@@ -67,6 +67,7 @@ return function()
         vim.keymap.set('n', '<Leader>li', vim.lsp.buf.implementation, kopts)
         vim.keymap.set('n', '<Leader>lr', vim.lsp.buf.references, kopts)
         vim.keymap.set('n', '<Leader>ls', vim.lsp.buf.signature_help, kopts)
+        vim.keymap.set('n', '<Leader>la', vim.lsp.buf.code_action, kopts)
         -- -- telescope
         local tsb = require 'telescope.builtin'
         local tst = require 'telescope.themes'

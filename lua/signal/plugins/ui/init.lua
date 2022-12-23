@@ -44,6 +44,7 @@ function M.hover()
         init = function()
             require 'hover.providers.lsp'
             require 'hover.providers.gh'
+            require 'hover.providers.gh_user'
             require 'hover.providers.man'
             require 'hover.providers.dictionary'
         end,
@@ -53,8 +54,8 @@ function M.hover()
         preview_window = false,
         title = true,
     }
-    vim.keymap.set('n', '<Leader>\'', hover.hover, { desc = "hover.nvim" })
-    vim.keymap.set('n', '<Leader>g\'', hover.hover_select, { desc = "hover.nvim (select)" })
+    vim.keymap.set('n', '<Leader>\'', require("hover").hover, { desc = "hover.nvim" })
+    vim.keymap.set('n', '<Leader>g\'', require("hover").hover_select, { desc = "hover.nvim (select)" })
 end
 
 function M.noice()

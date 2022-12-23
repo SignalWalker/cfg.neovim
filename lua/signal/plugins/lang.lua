@@ -84,4 +84,8 @@ function M.org()
     }
 end
 
+function M.tree_sitter_just()
+    require'tree-sitter-just'.setup{}
+end
+
 return M
