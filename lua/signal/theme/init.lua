@@ -1,12 +1,17 @@
-vim.opt.termguicolors = true
-
 vim.opt.linespace = 0
-
--- vim.o.background = "dark"
 
 vim.opt.guifont = 'Iosevka:h9'
 
--- gruvbox
-vim.g.gruvbox_material_better_performance = 1
-
-vim.cmd.colorscheme 'everforest'
+vim.keymap.set('n', '<Leader>vct', function()
+	local scheme = vim.api.nvim_exec("colorscheme", true)
+	if vim.o.background == "light" then
+		vim.o.background = "dark"
+		vim.g.everforest_transparent_background = 1
+	else
+		vim.o.background = "light"
+		vim.g.everforest_transparent_background = 0
+	end
+	if scheme == "everforest" then
+		vim.cmd.colorscheme(scheme)
+	end
+end, { desc = "switch between light and dark theme" })

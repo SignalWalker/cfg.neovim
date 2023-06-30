@@ -2,12 +2,67 @@ local M = {}
 
 function M.vgit()
     require 'vgit'.setup {
+        keymaps = {
+            ['n <Leader>ggj'] = function() require('vgit').hunk_down() end,
+            ['n <Leader>ggk'] = function() require('vgit').hunk_up() end,
+            ['n <Leader>gpd'] = function() require('vgit').buffer_hunk_preview() end,
+            ['n <Leader>gpsd'] = function() require('vgit').buffer_hunk_staged_preview() end,
+            ['n <Leader>gph'] = function() require('vgit').buffer_history_preview() end,
+            ['n <Leader>gppd'] = function() require('vgit').project_diff_preview() end,
+        }
+    }
+end
 
+function M.neogit()
+    local diffview = require'diffview' -- load-bearing for diffview integration
+    local neogit = require'neogit'
+    neogit.setup{
+        integrations = {
+            diffview = true
+        }
+    }
+    vim.keymap.set('n', '<Leader>gno', function() neogit.open() end, { desc = "neogit :: open" })
+    vim.keymap.set('n', '<Leader>gnc', function() neogit.open({"commit"}) end, { desc = "neogit :: commit" })
+end
+
+function M.diffview()
+    local actions = require'diffview.actions'
+    require'diffview'.setup{
+        diff_binaries = false,
+        use_icons = true,
+        keymaps = {
+            -- disable_defaults = true,
+            -- view = {
+            -- },
+        }
+    }
+end
+
+function M.git_conflict()
+    require'git-conflict'.setup{
+        default_mappings = {
+            ours = '<Leader>gcl', -- 'local'
+            theirs = '<Leader>gcr', -- 'remote'
+            none = '<Leader>gc0',
+            both = '<Leader>gcb',
+            next = '<Leader>gcn',
+            prev = '<Leader>gcN',
+        }
     }
 end
 
 function M.gitsigns()
     require 'gitsigns'.setup {}
+end
+
+function M.octo()
+    require'octo'.setup{
+
+    }
+
+    -- vim.keymap.set('n', '<Leader>gh')
+
+    vim.treesitter.language.register('markdown', 'octo')
 end
 
 function M.setup_coq()
@@ -53,5 +108,40 @@ function M.comment()
 end
 
 M.lsp = require('signal.plugins.dev.lsp')
+
+function M.conjure()
+
+end
+
+function M.dap()
+    local dap = require'dap'
+    dap.adapters.lldb = {
+        type = "executable",
+        command = "/usr/bin/lldb-vscode",
+        name = "lldb"
+    }
+    dap.adapters.codelldb = {
+        type = 'server',
+        port = "${port}",
+        executable = {
+            command = "/usr/lib/codelldb/adapter/codelldb",
+            args = { "--port", "${port}" }
+        }
+    }
+    dap.configurations.rust = {
+        {
+            name = "Launch (codelldb)",
+            type = "codelldb",
+            request = "launch",
+            program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            cwd = '${workspaceFolder}',
+            stopOnEntry = false
+        }
+    }
+    dap.configurations.cpp = dap.configurations.rust
+    dap.configurations.c = dap.configurations.rust
+end
 
 return M

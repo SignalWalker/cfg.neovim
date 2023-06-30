@@ -6,9 +6,9 @@ return function()
         disable_netrw = true,
         hijack_netrw = true,
 
-        open_on_setup = false,
-        open_on_setup_file = false,
-        ignore_ft_on_setup = { 'startify', 'alpha' },
+        -- open_on_setup = false,
+        -- open_on_setup_file = false,
+        -- ignore_ft_on_setup = { 'startify', 'alpha' },
 
         ignore_buf_on_tab_change = {},
 

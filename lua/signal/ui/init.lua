@@ -54,4 +54,4 @@ vim.opt.clipboard:append('unnamedplus')
 vim.opt.completeopt = { list = 'menuone', 'noinsert', 'noselect' }
 
 vim.opt.title = true
-vim.opt.titlestring = '' -- empty = automatic
+vim.opt.titlestring = ' %F' -- empty = automatic

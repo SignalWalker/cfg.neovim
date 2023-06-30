@@ -20,6 +20,41 @@ local function ensure_packer()
     return false, packer
 end
 
+local function in_kitty()
+    return vim.env.TERM == "xterm-kitty"
+end
+
+local function in_neovide()
+    return vim.env.TERM == "linux"
+end
+
+META_FILETYPES = {
+    'lspinfo',
+    'packer',
+    'checkhealth',
+    'help',
+    'man',
+    'dashboard',
+    'NvimTree',
+    'gitcommit',
+    'alpha',
+    -- 'dapui_scopes',
+    -- 'dapui_breakpoints',
+    -- 'dapui_stacks',
+    -- 'dapui_watches',
+    -- 'dapui_console',
+    -- 'dap-repl',
+}
+META_BUFTYPES = {
+    'terminal',
+    'alpha',
+    'help',
+    'packer',
+    'dashboard',
+    'NvimTree',
+    'nofile'
+}
+
 local bootstrap, packer = ensure_packer()
 
 -- package map
@@ -27,6 +62,25 @@ local packages = {
     meta = {
         'wbthomason/packer.nvim',
         'lewis6991/impatient.nvim',
+        aniseed = 'Olical/aniseed',
+        local_fennel = {
+            'Olical/nvim-local-fennel',
+            requires = {
+                'Olical/aniseed'
+            }
+        },
+        session = {
+            'Shatur/neovim-session-manager',
+            requires = {
+                'nvim-lua/plenary.nvim'
+            }
+        },
+        direnv = {
+            'direnv/direnv.vim',
+        }
+        -- startup_time = {
+        --     "https://sr.ht/~henriquehbr/nvim-startup.lua",
+        -- }
     },
     ui = {
         notify = {
@@ -60,12 +114,16 @@ local packages = {
         hologram = { -- image previews
             'edluffy/hologram.nvim',
             -- only supported in kitty (avoid loading in, for example, neovide)
-            cond = function() return vim.env.TERM == "xterm-kitty" end
+            cond = in_kitty
         },
-        -- dashboard = {
-        --     'goolord/alpha-nvim',
-        --     requires = { 'nvim-tree/nvim-web-devicons' },
+        -- glow = { -- markdown preview
+        --     'ellisonleao/glow.nvim',
+        --     cond = in_kitty
         -- },
+        dashboard = {
+            'goolord/alpha-nvim',
+            requires = { 'nvim-tree/nvim-web-devicons' },
+        },
         project = {
             'ahmedkhalf/project.nvim',
             after = {
@@ -89,7 +147,7 @@ local packages = {
         nvimtree = {
             'nvim-tree/nvim-tree.lua',
             requires = {
-                'nvim-tree/nvim-web-devicons', -- optional, for file icons
+                'nvim-tree/nvim-web-devicons',
             }
         },
         -- noice = {
@@ -97,9 +155,9 @@ local packages = {
         --     requires = {
         --         'MunifTanjim/nui.nvim',
         --         'rcarriga/nvim-notify',
-        --         'nvim-treesitter/nvim-treesitter'
+        --         'nvim-treesitter/nvim-treesitter',
+        --         'nvim-tree/nvim-web-devicons'
         --     },
-        --     after = 'telescope.nvim'
         -- },
         trouble = {
             'folke/trouble.nvim',
@@ -124,6 +182,26 @@ local packages = {
             'nvim-telescope/telescope-file-browser.nvim',
             after = 'telescope.nvim',
         },
+        telescope_ui_select = {
+            'nvim-telescope/telescope-ui-select.nvim',
+            after = 'telescope.nvim'
+        },
+        telescope_packer = {
+            'nvim-telescope/telescope-packer.nvim',
+            after = 'telescope.nvim'
+        },
+        telescope_dap = {
+            'nvim-telescope/telescope-dap.nvim',
+            requires = {
+                'nvim-telescope/telescope.nvim',
+                'mfussenegger/nvim-dap',
+                'nvim-treesitter/nvim-treesitter'
+            },
+            after = {
+                'telescope.nvim',
+                'nvim-dap'
+            }
+        },
         -- telescope_project = {
         --     'nvim-telescope/telescope-project.nvim',
         --     requires = 'nvim-telescope/telescope.nvim'
@@ -133,7 +211,11 @@ local packages = {
             'rcarriga/nvim-dap-ui',
             requires = { 'mfussenegger/nvim-dap' },
             after = { 'nvim-dap' }
-        }
+        },
+        -- kitty_nav = {
+        --     'knubie/vim-kitty-navigator',
+        --     run = "cp ./pass_keys.py ./neighboring_window.py $XDG_CONFIG_HOME/kitty/"
+        -- }
     },
     general = {
         'tpope/vim-sleuth',
@@ -142,7 +224,11 @@ local packages = {
             config = function()
                 require 'spaceless'.setup()
             end
-        }
+        },
+        -- mediawiki = {
+        --     'm-pilia/vim-mediawiki',
+        --
+        -- },
     },
     dev = {
         treesitter = {
@@ -177,10 +263,50 @@ local packages = {
             after = { 'orgmode' }
         },
         gitsigns = 'lewis6991/gitsigns.nvim',
+        -- vgit = {
+        --     'tanvirtin/vgit.nvim',
+        --     requires = {
+        --         'nvim-lua/plenary.nvim',
+        --         'nvim-tree/nvim-web-devicons'
+        --     },
+        -- },
+        -- git_conflict = {
+        --     'akinsho/git-conflict.nvim',
+        --     tag = '*'
+        -- },
+        neogit = {
+            'TimUntersberger/neogit',
+            requires = {
+                'nvim-plenary/plenary.nvim',
+                'sindrets/diffview.nvim',
+            },
+            after = {
+                'diffview.nvim'
+            }
+        },
+        diffview = {
+            'sindrets/diffview.nvim',
+            requires = {
+                'nvim-tree/nvim-web-devicons',
+            }
+        },
+        -- octo = {
+        --     'pwntester/octo.nvim',
+        --     requires = {
+        --         'nvim-lua/plenary.nvim',
+        --         'nvim-telescope/telescope.nvim',
+        --         'nvim-tree/nvim-web-devicons'
+        --     },
+        --     after = {
+        --         'nvim-treesitter',
+        --         'telescope.nvim'
+        --     }
+        -- },
         comment = 'numToStr/Comment.nvim',
         neoformat = 'sbdchd/neoformat',
         lsp_format = 'lukas-reineke/lsp-format.nvim',
         dap = 'mfussenegger/nvim-dap',
+        -- conjure = 'Olical/conjure'
     },
     lang = {
         rust_tools = {
@@ -201,9 +327,10 @@ local packages = {
             'nvim-neorg/neorg',
             -- tag = "*", -- latest stable
             run = ':Neorg sync-parsers',
-            requires = { 'nvim-lua/plenary.nvim' },
+            requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope' },
             ft = { "norg" },
             after = { "nvim-treesitter", "telescope.nvim" },
+            cmd = { "Neorg" }
         },
         org = {
             'nvim-orgmode/orgmode',
@@ -215,11 +342,17 @@ local packages = {
             requires = {
                 'nvim-treesitter/nvim-treesitter'
             },
+        },
+        telekasten = {
+            'renerocksai/telekasten.nvim',
+            requires = { 'nvim-telescope/telescope.nvim' }
         }
     },
     theme = {
-        'sainnhe/gruvbox-material',
-        everforest = 'sainnhe/everforest',
+        gruvbox = 'sainnhe/gruvbox-material',
+        everforest = {
+            'sainnhe/everforest',
+        },
         'sainnhe/edge',
         'sainnhe/sonokai',
         kanagawa = 'rebelot/kanagawa.nvim',
@@ -246,11 +379,11 @@ return packer.startup({
         for name, grp in pairs(packages) do
             local s_ok, setup = pcall(require, 'signal.plugins.' .. name)
             if not s_ok then
-                vim.notify("Could not load plugin group config module: signal.plugins." .. name, "warn")
+                vim.notify("Could not load plugin group config module: signal.plugins." .. name, vim.log.levels.WARN)
                 setup = {}
             end
             if type(setup) ~= 'table' then
-                vim.notify("Loaded plugin group module is not a table of functions: signal.plugins." .. name, "error")
+                vim.notify("Loaded plugin group module is not a table of functions: signal.plugins." .. name, vim.log.levels.ERROR)
                 setup = {}
             end
             -- for each package in grp, load the package & apply a config function if specified (based on package key & group)

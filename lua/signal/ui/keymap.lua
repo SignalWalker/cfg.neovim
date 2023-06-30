@@ -11,3 +11,5 @@ vim.keymap.set('n', '<H-h>', '<cmd>tabprevious<cr>', { desc = "move cursor to pr
 vim.keymap.set('n', '<H-l>', '<cmd>tabnext<cr>', { desc = "move cursor to next tab" })
 
 vim.keymap.set('n', '<Leader><C-x>', '<cmd>bwipe<cr>', { desc = "wipe buffer" })
+
+-- extra keymaps set in plugin init & ftplugin files

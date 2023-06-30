@@ -20,7 +20,7 @@ in {
         default = inputs.neovim.packages.${pkgs.system}.neovim;
       };
       settings = {
-        enable = (mkEnableOption "install ashvim configuration") // {default = config.system.isNixOS or false;};
+        enable = (mkEnableOption "install ashvim configuration") // {default = config.system.isNixOS or true;};
       };
     };
   };
@@ -32,6 +32,7 @@ in {
         [nvim.package]
         ++ (with pkgs; [
           tree-sitter
+          glow # markdown previews
         ]);
     }
     (lib.mkIf (config ? signal.dev.editor.editors) {

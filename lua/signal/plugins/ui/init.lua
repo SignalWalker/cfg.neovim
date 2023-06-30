@@ -10,7 +10,12 @@ function M.notify()
         stages = 'static',
         fps = 120,
     }
-    vim.notify = notify
+
+    local noice_ok, _ = pcall(require, 'noice')
+    if not noice_ok then
+        vim.notify = notify
+    end
+
     local ts = require('telescope')
     ts.load_extension("notify")
     vim.keymap.set('n', '<Leader>fvn', ts.extensions.notify.notify, { desc = 'telescope :: notifications' })
@@ -20,6 +25,10 @@ function M.hologram()
     require('hologram').setup{
         auto_display = true
     }
+end
+
+function M.glow()
+    require('glow').setup{}
 end
 
 function M.gui_font_resize()
@@ -62,15 +71,29 @@ function M.noice()
     require('noice').setup {
         lsp = {
             override = {
-                ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-                ["vim.lsp.util.stylize_markdown"] = false,
-                ["cmp.entry.get_documentation"] = false,
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                ["vim.lsp.util.stylize_markdown"] = true,
+                ["cmp.entry.get_documentation"] = true,
+            }
+        },
+        presets = {
+            bottom_search = true,
+            command_palette = true
+        },
+        routes = {
+            {
+                filter = {
+                    event = "msg_show",
+                    kind = "",
+                    find = "written",
+                },
+                opts = { skip = true }
             }
         }
     }
-	local ts = require('telescope')
-    ts.load_extension("noice")
-    vim.keymap.set('n', '<Leader>fvm', ts.extensions.noice.noice, { desc = 'telescope :: messages' })
+    local tscope = require('telescope')
+    tscope.load_extension("noice")
+    vim.keymap.set('n', '<Leader>fvm', tscope.extensions.noice.noice, { desc = 'telescope :: messages' })
 end
 
 function M.trouble()
@@ -99,7 +122,8 @@ end
 
 function M.indent_guides()
     require('indent_blankline').setup {
-        buftype_exclude = { 'terminal', 'alpha', 'help', 'packer', 'dashboard' },
+        filetype_exclude = META_FILETYPES,
+        buftype_exclude = META_BUFTYPES,
         show_current_context = true,
     }
 end
@@ -111,7 +135,8 @@ function M.lualine()
             theme = 'auto',
             component_separators = { left = '', right = '' },
             section_separators = { left = '', right = '' },
-            disabled_filetypes = {},
+            disabled_filetypes = META_FILETYPES,
+            disabled_buftypes = META_BUFTYPES,
             always_divide_middle = true,
         },
         sections = {
@@ -166,20 +191,25 @@ function M.dap_ui()
     dapui.setup{}
 
     local dap = require'dap'
-    dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open({}) end
-    dap.listeners.after.event_terminated['dapui_config'] = function() dapui.close({}) end
-    dap.listeners.after.event_exited['dapui_config'] = function() dapui.close({}) end
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+        require'nvim-tree.api'.tree.close()
+        dapui.open({})
+    end
+    -- dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close({}) end
+    -- dap.listeners.before.event_exited['dapui_config'] = function() dapui.close({}) end
 end
 
 M.nvimtree = require('signal.plugins.ui.nvimtree')
 
 function M.project()
     require('project_nvim').setup {
+        detection_methods = { "pattern" },
         exclude_dirs = { "~/.local/share/cargo/*" },
         scope_chdir = 'win',
         ignore_lsp = { "sumneko_lua" },
         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix" },
     }
+
     local ts = require('telescope')
     ts.load_extension('projects')
     vim.keymap.set('n', '<Leader>ffp', ts.extensions.projects.projects, { desc = 'telescope :: projects' })
@@ -187,18 +217,34 @@ end
 
 function M.telescope()
     local ts = require 'telescope'
+    local tst = require 'telescope.themes'
+    local tsb = require 'telescope.builtin'
     ts.setup {
         extensions = {
-            file_browser = {
+            ["file_browser"] = {
                 hijack_netrw = false,
             },
-            project = {
+            ["project"] = {
                 sync_with_nvim_tree = true
+            },
+            ["ui-select"] = {
+                tst.get_dropdown {},
             }
-        }
+        },
+        pickers = {
+            buffers = {
+                mappings = {
+                    i = {
+                        ["<c-d>"] = "delete_buffer",
+                    },
+                    n = {
+                        ["d"] = "delete_buffer",
+                    },
+                },
+            },
+        },
     }
     -- keymaps
-    local tsb = require 'telescope.builtin'
 
     -- files
     vim.keymap.set('n', '<Leader>fff', tsb.find_files, { desc = 'tsb.find_files' })
@@ -239,7 +285,7 @@ function M.telescope()
 end
 
 function M.telescope_file_browser()
-	local ts = require('telescope')
+    local ts = require('telescope')
     ts.load_extension('file_browser')
     vim.keymap.set('n', '<Leader>ffb', ts.extensions.file_browser.file_browser, { desc = 'telescope :: file browser' })
 end
@@ -250,6 +296,21 @@ end
 
 function M.telescope_project()
     require 'telescope'.load_extension('project')
+end
+
+function M.telescope_ui_select()
+    require'telescope'.load_extension'ui-select'
+end
+
+function M.telescope_packer()
+    local ts = require'telescope'
+    ts.load_extension'packer'
+    vim.keymap.set('n', '<Leader>fvp', ts.extensions.packer.packer, { desc = "telescope :: packer" })
+end
+
+function M.telescope_dap()
+    local ts = require'telescope'
+    ts.load_extension'dap'
 end
 
 return M
