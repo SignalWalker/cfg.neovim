@@ -116,6 +116,14 @@ local packages = {
             -- only supported in kitty (avoid loading in, for example, neovide)
             cond = in_kitty
         },
+        pets = {
+            'giusgad/pets.nvim',
+            cond = in_kitty,
+            requires = {
+                'edluffy/hologram.nvim',
+                'MunifTanjim/nui.nvim'
+            }
+        },
         -- glow = { -- markdown preview
         --     'ellisonleao/glow.nvim',
         --     cond = in_kitty
@@ -132,7 +140,7 @@ local packages = {
         },
         window_picker = {
             's1n7ax/nvim-window-picker',
-            tag = 'v1.*',
+            tag = 'v2.*',
         },
         -- neotree = {
         --     'miversen33/netman.nvim',
@@ -216,6 +224,9 @@ local packages = {
         --     'knubie/vim-kitty-navigator',
         --     run = "cp ./pass_keys.py ./neighboring_window.py $XDG_CONFIG_HOME/kitty/"
         -- }
+        winshift = {
+            'sindrets/winshift.nvim',
+        }
     },
     general = {
         'tpope/vim-sleuth',

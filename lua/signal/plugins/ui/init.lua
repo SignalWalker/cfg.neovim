@@ -177,8 +177,8 @@ function M.window_picker()
         include_current = false,
         filter_rules = {
             bo = {
-                filetype = { 'neo-tree', 'neo-tree-popup', 'notify' },
-                buftype = { 'terminal', 'quickfix' }
+                filetype = META_FILETYPES, -- { 'NvimTree', 'neo-tree', 'neo-tree-popup', 'notify' },
+                buftype = META_BUFTYPES -- { 'terminal', 'quickfix' }
             }
         },
     }
@@ -311,6 +311,28 @@ end
 function M.telescope_dap()
     local ts = require'telescope'
     ts.load_extension'dap'
+end
+
+
+function M.winshift()
+    require'winshift'.setup{
+        window_picker = function() require'window-picker'.pick_window() end
+    }
+
+    vim.keymap.set('n', '<C-W>X', '<cmd>WinShift swap<cr>', {desc = "swap target windows"})
+
+    vim.keymap.set('n', '<M-H>', '<cmd>WinShift left<cr>', {desc = "shift window left"})
+    vim.keymap.set('n', '<M-J>', '<cmd>WinShift down<cr>', {desc = "shift window down"})
+    vim.keymap.set('n', '<M-K>', '<cmd>WinShift up<cr>', {desc = "shift window up"})
+    vim.keymap.set('n', '<M-L>', '<cmd>WinShift right<cr>', {desc = "shift window right"})
+
+end
+
+function M.pets()
+    require'pets'.setup{
+        default_pet = 'dog', -- cats not supported :(
+        default_style = 'gray'
+    }
 end
 
 return M

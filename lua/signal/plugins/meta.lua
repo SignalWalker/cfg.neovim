@@ -46,4 +46,5 @@ function M.setup_direnv()
     })
 end
 
+
 return M
