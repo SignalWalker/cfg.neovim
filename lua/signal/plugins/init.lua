@@ -222,8 +222,9 @@ local packages = {
         },
         -- kitty_nav = {
         --     'knubie/vim-kitty-navigator',
-        --     run = "cp ./pass_keys.py ./neighboring_window.py $XDG_CONFIG_HOME/kitty/"
-        -- }
+        --     cond = in_kitty,
+        --     run = "ln -st $XDG_CONFIG_HOME/kitty/ ./*.py"
+        -- },
         winshift = {
             'sindrets/winshift.nvim',
         }
@@ -259,20 +260,20 @@ local packages = {
             },
             after = { 'lsp-format.nvim' }
         },
-        coq = { -- completion
-            'ms-jpq/coq_nvim',
-            branch = 'coq',
-            run = ':COQdeps'
-        },
-        coq_artifacts = {
-            'ms-jpq/coq.artifacts',
-            branch = 'artifacts',
-        },
-        coq_thirdparty = {
-            'ms-jpq/coq.thirdparty',
-            branch = '3p',
-            after = { 'orgmode' }
-        },
+        --coq = { -- completion
+        --    'ms-jpq/coq_nvim',
+        --    branch = 'coq',
+        --    run = ':COQdeps'
+        --},
+        --coq_artifacts = {
+        --    'ms-jpq/coq.artifacts',
+        --    branch = 'artifacts',
+        --},
+        --coq_thirdparty = {
+        --    'ms-jpq/coq.thirdparty',
+        --    branch = '3p',
+        --    after = { 'orgmode' }
+        --},
         gitsigns = 'lewis6991/gitsigns.nvim',
         -- vgit = {
         --     'tanvirtin/vgit.nvim',
@@ -286,7 +287,7 @@ local packages = {
         --     tag = '*'
         -- },
         neogit = {
-            'TimUntersberger/neogit',
+            'NeogitOrg/neogit',
             requires = {
                 'nvim-plenary/plenary.nvim',
                 'sindrets/diffview.nvim',
