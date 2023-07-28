@@ -1,8 +1,4 @@
-inputs @ {
-  self,
-  nixpkgs,
-  ...
-}: {
+inputs @ {self, ...}: {
   config,
   pkgs,
   lib,
@@ -20,7 +16,7 @@ in {
         default = inputs.neovim.packages.${pkgs.system}.neovim;
       };
       settings = {
-        enable = (mkEnableOption "install ashvim configuration") // {default = config.system.isNixOS or true;};
+        enable = (mkEnableOption "install ashvim configuration") // {default = true;};
       };
     };
   };
@@ -33,6 +29,8 @@ in {
         ++ (with pkgs; [
           tree-sitter
           glow # markdown previews
+          fzf
+          sumneko-lua-language-server
         ]);
     }
     (lib.mkIf (config ? signal.dev.editor.editors) {

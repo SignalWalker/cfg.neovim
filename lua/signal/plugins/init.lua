@@ -77,10 +77,13 @@ local packages = {
         },
         direnv = {
             'direnv/direnv.vim',
-        }
+        },
         -- startup_time = {
         --     "https://sr.ht/~henriquehbr/nvim-startup.lua",
         -- }
+        plenary = {
+            'nvim-lua/plenary.nvim'
+        }
     },
     ui = {
         notify = {
@@ -181,11 +184,11 @@ local packages = {
                 'nvim-tree/nvim-web-devicons',
             }
         },
-        telescope_fzf_native = {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-            after = 'telescope.nvim',
-        },
+        -- telescope_fzf_native = {
+        --     'nvim-telescope/telescope-fzf-native.nvim',
+        --     run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+        --     after = 'telescope.nvim',
+        -- },
         telescope_file_browser = {
             'nvim-telescope/telescope-file-browser.nvim',
             after = 'telescope.nvim',
@@ -260,20 +263,20 @@ local packages = {
             },
             after = { 'lsp-format.nvim' }
         },
-        --coq = { -- completion
-        --    'ms-jpq/coq_nvim',
-        --    branch = 'coq',
-        --    run = ':COQdeps'
-        --},
-        --coq_artifacts = {
-        --    'ms-jpq/coq.artifacts',
-        --    branch = 'artifacts',
-        --},
-        --coq_thirdparty = {
-        --    'ms-jpq/coq.thirdparty',
-        --    branch = '3p',
-        --    after = { 'orgmode' }
-        --},
+        coq = { -- completion
+           'ms-jpq/coq_nvim',
+           branch = 'coq',
+           run = ':COQdeps'
+        },
+        coq_artifacts = {
+           'ms-jpq/coq.artifacts',
+           branch = 'artifacts',
+        },
+        coq_thirdparty = {
+           'ms-jpq/coq.thirdparty',
+           branch = '3p',
+           after = { 'orgmode' }
+        },
         gitsigns = 'lewis6991/gitsigns.nvim',
         -- vgit = {
         --     'tanvirtin/vgit.nvim',
@@ -335,15 +338,15 @@ local packages = {
             requires = { 'nvim-lua/plenary.nvim' },
             event = { 'BufRead Cargo.toml' },
         },
-        neorg = {
-            'nvim-neorg/neorg',
-            -- tag = "*", -- latest stable
-            run = ':Neorg sync-parsers',
-            requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope' },
-            ft = { "norg" },
-            after = { "nvim-treesitter", "telescope.nvim" },
-            cmd = { "Neorg" }
-        },
+        -- neorg = {
+        --     'nvim-neorg/neorg',
+        --     -- tag = "*", -- latest stable
+        --     run = ':Neorg sync-parsers',
+        --     requires = { 'nvim-lua/plenary.nvim', 'nvim-neorg/neorg-telescope' },
+        --     ft = { "norg" },
+        --     after = { "nvim-treesitter", "telescope.nvim" },
+        --     cmd = { "Neorg" }
+        -- },
         org = {
             'nvim-orgmode/orgmode',
             requires = { 'nvim-treesitter/nvim-treesitter' },
@@ -361,17 +364,17 @@ local packages = {
         }
     },
     theme = {
-        gruvbox = 'sainnhe/gruvbox-material',
+        -- gruvbox = 'sainnhe/gruvbox-material',
         everforest = {
             'sainnhe/everforest',
         },
-        'sainnhe/edge',
-        'sainnhe/sonokai',
-        kanagawa = 'rebelot/kanagawa.nvim',
-        catppuccin = {
-            'catppuccin/nvim',
-            as = 'catppuccin'
-        }
+        -- 'sainnhe/edge',
+        -- 'sainnhe/sonokai',
+        -- kanagawa = 'rebelot/kanagawa.nvim',
+        -- catppuccin = {
+        --     'catppuccin/nvim',
+        --     as = 'catppuccin'
+        -- }
     }
 }
 

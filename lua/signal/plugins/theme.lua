@@ -2,17 +2,21 @@ local M = {}
 
 function M.catppuccin()
     require('catppuccin').setup {
-        flavor = 'frappe',
+        flavour = 'frappe',
         background = {
             light = "latte",
             dark = "frappe"
         },
         term_colors = true,
-        transparent_background = true,
+        transparent_background = false,
+        integration_default = true,
         integrations = {
-            notify = true
+            -- notify = true,
+            -- nvimtree = true,
+            barbecue = false
         }
     }
+    -- vim.cmd.colorscheme 'catppuccin'
 end
 
 function M.kanagawa()
