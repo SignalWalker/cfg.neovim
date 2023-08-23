@@ -114,11 +114,11 @@ local packages = {
                 'nvim-tree/nvim-web-devicons'
             }
         },
-        hologram = { -- image previews
-            'edluffy/hologram.nvim',
-            -- only supported in kitty (avoid loading in, for example, neovide)
-            cond = in_kitty
-        },
+        -- hologram = { -- image previews
+        --     'edluffy/hologram.nvim',
+        --     -- only supported in kitty (avoid loading in, for example, neovide)
+        --     cond = in_kitty
+        -- },
         pets = {
             'giusgad/pets.nvim',
             cond = in_kitty,
@@ -289,16 +289,16 @@ local packages = {
         --     'akinsho/git-conflict.nvim',
         --     tag = '*'
         -- },
-        neogit = {
-            'NeogitOrg/neogit',
-            requires = {
-                'nvim-plenary/plenary.nvim',
-                'sindrets/diffview.nvim',
-            },
-            after = {
-                'diffview.nvim'
-            }
-        },
+        -- neogit = {
+        --     'NeogitOrg/neogit',
+        --     requires = {
+        --         'nvim-plenary/plenary.nvim',
+        --         'sindrets/diffview.nvim',
+        --     },
+        --     after = {
+        --         'diffview.nvim'
+        --     }
+        -- },
         diffview = {
             'sindrets/diffview.nvim',
             requires = {
@@ -322,6 +322,12 @@ local packages = {
         lsp_format = 'lukas-reineke/lsp-format.nvim',
         dap = 'mfussenegger/nvim-dap',
         -- conjure = 'Olical/conjure'
+        obsidian = {
+            'epwalsh/obsidian.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim'
+            }
+        }
     },
     lang = {
         rust_tools = {
@@ -357,11 +363,11 @@ local packages = {
             requires = {
                 'nvim-treesitter/nvim-treesitter'
             },
-        },
-        telekasten = {
-            'renerocksai/telekasten.nvim',
-            requires = { 'nvim-telescope/telescope.nvim' }
         }
+        -- telekasten = {
+        --     'renerocksai/telekasten.nvim',
+        --     requires = { 'nvim-telescope/telescope.nvim' }
+        -- }
     },
     theme = {
         -- gruvbox = 'sainnhe/gruvbox-material',

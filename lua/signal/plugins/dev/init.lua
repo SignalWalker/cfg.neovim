@@ -144,4 +144,57 @@ function M.dap()
     dap.configurations.c = dap.configurations.rust
 end
 
+function M.obsidian()
+    local obsidian = require'obsidian'
+    obsidian.setup({
+        dir = "/home/ash/notes",
+        daily_notes = {
+            folder = "daily",
+            date_format = "%Y-%m-%d"
+        },
+        templates = {
+            subdir = "template",
+            date_format = "%Y-%m-%d",
+            time_format = "%H:%M"
+        },
+        follow_url_func = function(url)
+            vim.fn.jobstart({"xdg-open", url})
+        end,
+        mappings = {
+            -- ["<Leader>oa"] = "<cmd>ObsidianOpen<cr>",
+            -- ["<Leader>of"] = require'obsidian.mapping'.gf_passthrough(),
+            -- ["<Leader>ob"] = "<cmd>ObsidianBacklinks<cr>",
+            -- ["<Leader>odt"] = "<cmd>ObsidianToday<cr>",
+            -- ["<Leader>ody"] = "<cmd>ObsidianYesterday<cr>",
+            -- ["<Leader>ot"] = "<cmd>ObsidianTemplate<cr>",
+            -- ["<Leader>og"] = "<cmd>ObsidianSearch<cr>",
+            -- ["<Leader>oll"] = "<cmd>ObsidianLink<cr>",
+            -- ["<Leader>ole"] = "<cmd>ObsidianLinkNew<cr>",
+        }
+    })
+
+    local augroup = vim.api.nvim_create_augroup("obsidian_setup_extra", { clear = true })
+    vim.api.nvim_create_autocmd({"BufEnter"}, {
+        group = group,
+        pattern = tostring("/home/ash/notes/**.md"),
+        callback = function()
+            vim.keymap.set('n', '<Leader>oa', '<cmd>ObsidianOpen<cr>', { desc = "Obsidian :: Open in App", buffer = true })
+            vim.keymap.set('n', 'gf', function()
+                if require'obsidian'.util.cursor_on_markdown_link() then
+                    return "<cmd>ObsidianFollowLink<cr>"
+                else
+                    return "gf"
+                end
+            end, { desc = "Obsidian :: Go to file under cursor", buffer = true, expr = true, noremap = true })
+            vim.keymap.set('n', '<Leader>ob', '<cmd>ObsidianBacklinks<cr>', { desc = "Obsidian :: List backlinks", buffer = true })
+            vim.keymap.set('n', '<Leader>odt', '<cmd>ObsidianToday<cr>', { desc = "Obsidian :: Open Today's Note", buffer = true })
+            vim.keymap.set('n', '<Leader>ody', '<cmd>ObsidianYesterday<cr>', { desc = "Obsidian :: Open Yesterday's Note", buffer = true })
+            vim.keymap.set('n', '<Leader>ot', '<cmd>ObsidianTemplate<cr>', { desc = "Obsidian :: Open Template", buffer = true })
+            vim.keymap.set('n', '<Leader>og', '<cmd>ObsidianSearch<cr>', { desc = "Obsidian :: Search", buffer = true })
+            vim.keymap.set('n', '<Leader>oll', '<cmd>ObsidianLink<cr>', { desc = "Obsidian :: Link to note", buffer = true })
+            vim.keymap.set('n', '<Leader>ole', '<cmd>ObsidianLinkNew<cr>', { desc = "Obsidian :: Link to new note", buffer = true })
+        end
+    })
+end
+
 return M
