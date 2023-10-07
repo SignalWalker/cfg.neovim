@@ -50,12 +50,11 @@ return function()
         filesystem_watchers = {
             enable = true
         },
-        remove_keymaps = false,
+        -- remove_keymaps = false,
         select_prompts = true,
         view = {
             adaptive_size = false,
             centralize_selection = false,
-            hide_root_folder = false,
             preserve_window_proportions = true
         },
         renderer = {
@@ -69,7 +68,8 @@ return function()
             icons = {
                 webdev_colors = true,
                 git_placement = 'signcolumn',
-            }
+            },
+            root_folder_label = false,
         },
         filters = {
             dotfiles = true,

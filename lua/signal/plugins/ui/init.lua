@@ -121,11 +121,18 @@ function M.flit()
 end
 
 function M.indent_guides()
-    require('indent_blankline').setup {
-        filetype_exclude = META_FILETYPES,
-        buftype_exclude = META_BUFTYPES,
-        show_current_context = true,
-    }
+    -- todo
+
+    -- require('ibl').setup {
+    --     scope = {
+    --     }
+    -- }
+    -- require('indent_blankline').setup {
+    --     filetype_exclude = META_FILETYPES,
+    --     buftype_exclude = META_BUFTYPES,
+    --     show_current_context = true,
+    --
+    -- }
 end
 
 function M.lualine()
