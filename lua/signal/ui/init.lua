@@ -55,3 +55,5 @@ vim.opt.completeopt = { list = 'menuone', 'noinsert', 'noselect' }
 
 vim.opt.title = true
 vim.opt.titlestring = ' %F' -- empty = automatic
+
+vim.opt.conceallevel = 1
