@@ -6,10 +6,10 @@
       url = "github:kamadorueda/alejandra";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim = {
-      url = "github:neovim/neovim?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # neovim = {
+    #   url = "github:neovim/neovim?dir=contrib";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
   outputs = inputs @ {
     self,
@@ -21,5 +21,6 @@
     in {
       formatter = std.mapAttrs (system: pkgs: pkgs.default) inputs.alejandra.packages;
       homeManagerModules.default = import ./home-manager.nix inputs;
+		nixosModules.default = import ./nixos-module.nix;
     };
 }
