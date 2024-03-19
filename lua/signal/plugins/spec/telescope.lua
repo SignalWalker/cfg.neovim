@@ -93,7 +93,7 @@ return {
 				function()
 					require("telescope.builtin").find_files()
 				end,
-				desc = "telescope :: find_files",
+				desc = "telescope :: files",
 			},
 			{
 				"<Leader>ffo",
@@ -105,9 +105,9 @@ return {
 			{
 				"<Leader>ffg",
 				function()
-					require("telescope.builtin").live_grep()
+					require("telescope.builtin").live_grep({ additional_args = { "--type-not=lock" } })
 				end,
-				desc = "telescope :: live_grep",
+				desc = "telescope :: grep (ignore lock files)",
 			},
 
 			-- buffer

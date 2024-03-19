@@ -85,6 +85,8 @@ local set_lsp_keymaps = function(client, bufnr)
 		dap.terminate({}, { terminateDebuggee = true }, dap.close)
 	end, kopts("dap :: terminate"))
 	vim.keymap.set("n", "<Leader>dxr", dap.restart, kopts("dap :: restart"))
+	vim.keymap.set("n", "<Leader>ddc", dap.continue, kopts("dap :: continue"))
+	vim.keymap.set("n", "<Leader>ddr", dap.run_last, kopts("dap :: run last"))
 
 	vim.keymap.set("n", "<Leader>fdc", tsdap.commands, kopts("dap :: commands"))
 	vim.keymap.set("n", "<Leader>fdo", tsdap.configurations, kopts("dap :: configurations"))
@@ -92,22 +94,86 @@ local set_lsp_keymaps = function(client, bufnr)
 	vim.keymap.set("n", "<Leader>fdv", tsdap.variables, kopts("dap :: variables"))
 	vim.keymap.set("n", "<Leader>fdf", tsdap.frames, kopts("dap :: frames"))
 
+	dap.listeners.before.attach.keymap_reminder = function()
+		print(
+			"DAP Keymaps: \n<F5>: Continue\n<S-<F5>>: Restart\n<C-S-<F5>>: Run Last\n<F10>: Step Over\n<F11>: Step Into\n<S-<F11>>: Step Out"
+		)
+	end
+	dap.listeners.before.launch.keymap_reminder = function()
+		print(
+			"DAP Keymaps: \n<F5>: Continue\n<S-<F5>>: Restart\n<C-S-<F5>>: Run Last\n<F10>: Step Over\n<F11>: Step Into\n<S-<F11>>: Step Out"
+		)
+	end
+
 	return kopts
 end
 
 return {
 	{
+		"nvim-neotest/nvim-nio",
+		lazy = true,
+	},
+	{
+		"nvim-neotest/neotest",
+		event = "LspAttach",
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = function(plugin, opts)
+			return {
+				adapters = {
+					require("rustaceanvim.neotest"),
+				},
+			}
+		end,
+	},
+	{
 		"mrcjkb/rustaceanvim",
 		version = "^4",
 		ft = { "rust" },
 		init = function()
+			-- local uv = vim.loop
+			-- local extension_path = uv.fs_realpath(vim.env.XDG_DATA_HOME .. "/vscode/extensions/vadimcn.vscode-lldb")
+			-- local codelldb_path = uv.fs_realpath(extension_path .. "/adapter/codelldb")
+			-- local liblldb_path = uv.fs_realpath(extension_path .. "/lldb/lib/liblldb.so")
+
 			vim.g.rustaceanvim = {
 				tools = {
+					reload_workspace_from_cargo_toml = true,
 					hover_actions = {
 						replace_builtin_hover = true,
 					},
 				},
+				dap = {
+					-- adapter = rustcfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+				},
 				server = {
+					standalone = false,
+					default_settings = {
+						["rust-analyzer"] = {
+							imports = {
+								prefix = "crate",
+								granularity = {
+									enforce = true,
+									group = "crate",
+								},
+								merge = {
+									glob = false,
+								},
+							},
+							check = {
+								command = "clippy",
+							},
+							diagnostics = {
+								experimental = {
+									enable = true,
+								},
+							},
+						},
+					},
 					on_attach = function(client, bufnr)
 						local kopts = set_lsp_keymaps(client, bufnr)
 						vim.keymap.set(
@@ -159,23 +225,6 @@ return {
 						vim.keymap.set("n", "<Leader>ltl", "<cmd>RustLsp testables<cr>", kopts("rust :: run testable"))
 					end,
 				},
-				dap = {},
-			}
-		end,
-	},
-	{
-		"nvim-neotest/neotest",
-		event = "LspAttach",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"antoinemadec/FixCursorHold.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		opts = function(plugin, opts)
-			return {
-				adapters = {
-					require("rustaceanvim.neotest"),
-				},
 			}
 		end,
 	},
@@ -205,10 +254,25 @@ return {
 			"hrsh7th/nvim-cmp",
 		},
 		opts = {
-			lua_ls = {},
+			["lua_ls"] = {},
+			["tailwindcss"] = {},
+			["taplo"] = {},
+			["jsonls"] = {},
 		},
 		config = function(plugin, opts)
 			local lsp = require("lspconfig")
+
+			opts["nixd"] = {
+				root_dir = lsp.util.root_pattern(".nixd.json", "flake.nix"),
+				settings = {
+					["nixd"] = {
+						formatting = {
+							command = "nix fmt",
+						},
+					},
+				},
+			}
+
 			local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 			for srv, cfg in pairs(opts) do
 				if cfg["on_attach"] == nil then

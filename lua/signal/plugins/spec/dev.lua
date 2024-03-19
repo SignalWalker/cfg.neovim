@@ -9,7 +9,7 @@ return {
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		keys = {
-			{ "<Leader>xt", trouble_toggle(), desc = "trouble :: toggle" },
+			{ "<Leader>xx", trouble_toggle(), desc = "trouble :: toggle" },
 			{
 				"<Leader>xw",
 				trouble_toggle("workspace_diagnostics"),
@@ -27,29 +27,46 @@ return {
 	},
 	{
 		"folke/todo-comments.nvim",
+		lazy = false,
 		dependencies = { "nvim-lua/plenary.nvim" },
+		keys = {
+			{ "<Leader>xt", "<cmd>TodoTrouble<cr>", desc = "trouble :: toggle (todos)" },
+			{ "<Leader>fpt", "<cmd>TodoTelescope<cr>", desc = "project :: list todos" },
+		},
+		opts = {
+			keywords = {
+				TODO = { alt = { "todo!", "unimplemented!" } },
+			},
+			highlight = {
+				pattern = {
+					[[.*<(KEYWORDS)\s*:]],
+					[[.*<(KEYWORDS)\s*!\(]],
+				},
+				comments_only = false,
+			},
+			search = {
+				pattern = [[\b(KEYWORDS)(:|!\()]],
+			},
+		},
+	},
+	{
+		"NMAC427/guess-indent.nvim",
 		opts = {},
 	},
 	{
 		"direnv/direnv.vim",
 		init = function()
-			vim.g.direnv_silent_load = 0
+			vim.g.direnv_silent_load = 1
 		end,
-		config = function(plugin, opts)
-			-- vim.api.nvim_create_autocmd({ "DirenvLoaded" }, {
+		config = function(_, _)
+			-- vim.api.nvim_create_autocmd({ "User" }, {
 			-- 	group = vim.api.nvim_create_augroup("NotifyDirenv", { clear = true }),
-			-- 	pattern = "Cargo.toml",
+			-- 	pattern = "DirenvLoaded",
 			-- 	callback = function(args)
-			-- 		print("Loaded direnv for " .. args["file"])
+			-- 		print("Direnv loaded for " .. vim.loop.cwd())
 			-- 	end,
 			-- })
 		end,
-	},
-	{
-		"sindrets/diffview.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
 	},
 	{
 		"numToStr/Comment.nvim",
@@ -92,6 +109,15 @@ return {
 		},
 		init = function()
 			vim.o.formatexpr = "v:lua.require('conform').formatexpr()"
+		end,
+	},
+	{
+		"chipsenkbeil/distant.nvim",
+		enabled = false,
+		branch = "v0.3",
+		opts = {},
+		config = function(_, opts)
+			require("distant"):setup(opts)
 		end,
 	},
 }

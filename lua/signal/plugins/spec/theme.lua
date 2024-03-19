@@ -1,17 +1,66 @@
+local tokyonight_opts = {
+	style = "storm",
+	light_style = "day",
+	sidebars = { "qf", "help", "NvimTree" },
+	transparent = true,
+}
+
+local swap_tokyonight = function()
+	local style = tokyonight_opts.style
+
+	if vim.o.background == "light" then
+		vim.o.background = "dark"
+		style = tokyonight_opts.style
+	else
+		vim.o.background = "light"
+		style = tokyonight_opts.light_style
+	end
+
+	local style_conf = vim.env.XDG_CONFIG_HOME .. "/kitty/themes/tokyonight_" .. style .. ".conf"
+	local kitty_cmd = "kitty @ set-colors " .. style_conf
+	vim.fn.system(kitty_cmd)
+end
+
+local refresh_tokyonight = function(transparency)
+	local opts = vim.deepcopy(tokyonight_opts)
+	opts.transparency = transparency
+	require("tokyonight").setup(opts)
+	vim.cmd([[colorscheme tokyonight]])
+end
+
 return {
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {
-			sidebars = { "qf", "help", "NvimTree" },
-			transparent = true,
+		opts = tokyonight_opts,
+		keys = {
+			{ "<Leader>vct", swap_tokyonight, desc = "toggle light/dark theme (tokyonight)" },
 		},
+		config = function(plugin, opts)
+			local tk = require("tokyonight")
+			tk.setup(opts)
+		end,
 	},
 	{
 		"folke/drop.nvim",
+		enabled = false, -- FIX :: https://github.com/folke/drop.nvim/issues/15
 		event = "VimEnter",
 		opts = {},
+	},
+	{
+		"stevearc/dressing.nvim",
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+		opts = {
+			input = {
+				enabled = false,
+			},
+			select = {
+				enabled = true,
+			},
+		},
 	},
 	{
 		"folke/noice.nvim",
@@ -36,6 +85,16 @@ return {
 				inc_rename = false,
 				lsp_doc_border = true,
 			},
+			routes = {
+				{
+					filter = {
+						event = "msg_show",
+						kind = "",
+						find = "written",
+					},
+					opts = { skip = true },
+				},
+			},
 		},
 		keys = {
 			{ "<Leader>fvm", "<cmd>Noice telescope<cr>", desc = "telescope :: message history" },
@@ -50,91 +109,44 @@ return {
 		end,
 	},
 	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"folke/noice.nvim",
+		"3rd/image.nvim",
+		lazy = true,
+		opts = {
+			backend = "kitty",
 		},
-		init = function()
-			vim.opt.termguicolors = true
-		end,
-		opts = function(plugin, opts)
-			local noice = require("noice")
-			local status = noice.api.status
-			return {
-				options = {
-					theme = "auto",
-					icons_enabled = true,
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
-					always_divide_middle = true,
+	},
+	{
+		"giusgad/pets.nvim",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			{
+				"giusgad/hologram.nvim",
+				opts = {
+					auto_display = false,
 				},
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "branch", "diagnostics" },
-					lualine_c = { "hostname", { "filename", path = 1 }, "diff" },
-					lualine_x = {
-						{ status.message.get_hl, cond = status.message.has },
-						{ status.command.get, cond = status.command.has, color = { fg = "#ff9e64" } },
-						{ status.mode.get, cond = status.mode.has, color = { fg = "#ff9e64" } },
-						{ status.search.get, cond = status.search.has, color = { fg = "#ff9e64" } },
-						"encoding",
-						"fileformat",
-					},
-					lualine_y = { "filetype" },
-					lualine_z = { "location" },
-				},
-				inactive_sections = {
-					lualine_a = {},
-					lualine_b = {},
-					lualine_c = { "hostname", { "filename", path = 1 } },
-					lualine_x = { "location" },
-					lualine_y = {},
-					lualine_z = {},
-				},
-				tabline = {
-					lualine_a = {
-						{
-							"buffers",
-							filetype_names = {
-								TelescopePrompt = "Telescope",
-								dashboard = "Dashboard",
-								packer = "Packer",
-								fzf = "FZF",
-								alpha = "Alpha",
-								NvimTree = "NvimTree",
-							},
-						},
-					},
-					lualine_b = { "hostname", { "filename", path = 2 }, "branch" },
-					lualine_c = {},
-					lualine_x = {},
-					lualine_y = { "datetime" },
-					lualine_z = { "tabs" },
-				},
-				-- winbar = {
-				-- 	lualine_a = {},
-				-- 	lualine_b = {},
-				-- 	lualine_c = { "hostname", { "filename", path = 1 } },
-				-- 	lualine_x = {},
-				-- 	lualine_y = {},
-				-- 	lualine_z = {},
-				-- },
-				-- inactive_winbar = {
-				-- 	lualine_a = {},
-				-- 	lualine_b = {},
-				-- 	lualine_c = { "hostname", { "filename", path = 1 } },
-				-- 	lualine_x = {},
-				-- 	lualine_y = {},
-				-- 	lualine_z = {},
-				-- },
-				extensions = {
-					"nvim-tree",
-					"nvim-dap-ui",
-					"lazy",
-					"trouble",
-				},
-			}
-		end,
+			},
+		},
+		keys = {
+			{
+				"<Leader>vpsd",
+				function()
+					local colors = { "brown", "black", "gray", "beige" }
+					local color = colors[math.random(#colors)]
+					local name = vim.loop.random(8, nil, nil)
+					vim.cmd("PetsNewCustom dog " .. color .. " " .. name)
+				end,
+				desc = "summon dog",
+			},
+		},
+		opts = {
+			row = 5,
+			col = 0,
+			default_pet = "dog", -- cats not supported :(
+			default_style = "gray",
+			popup = {
+				width = "100%",
+				avoid_statusline = true,
+			},
+		},
 	},
 }

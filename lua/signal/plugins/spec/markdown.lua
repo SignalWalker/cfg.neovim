@@ -56,7 +56,7 @@ return {
 				group = vim.api.nvim_create_augroup("obsidian_setup_extra", { clear = true }),
 				pattern = "/home/ash/notes/**.md",
 				callback = function(args)
-					vim.bo.conceallevel = 2
+					vim.wo.conceallevel = 2
 					local bufnr = args["buf"]
 					local kopts_base = { noremap = true, silent = true, buffer = bufnr }
 					local kopts = function(desc)

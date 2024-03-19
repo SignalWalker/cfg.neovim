@@ -8,6 +8,16 @@ return {
 			vim.o.timeout = true
 			vim.o.timeoutlen = 300
 		end,
+		keys = {
+			{ "<Leader>vkk", '<cmd>WhichKey "<cr>', desc = "vim :: view keymaps (all)" },
+			{ "<Leader>vkn", "<cmd>WhichKey '' n \"<cr>", desc = "vim :: view keymaps (normal)" },
+			{ "<Leader>vki", "<cmd>WhichKey '' i \"<cr>", desc = "vim :: view keymaps (insert)" },
+			{ "<Leader>vkc", "<cmd>WhichKey '' c \"<cr>", desc = "vim :: view keymaps (cmdline)" },
+			{ "<Leader>vkv", "<cmd>WhichKey '' v \"<cr>", desc = "vim :: view keymaps (visual)" },
+			{ "<Leader>vkV", "<cmd>WhichKey '' V \"<cr>", desc = "vim :: view keymaps (visual by line)" },
+			{ "<Leader>vks", "<cmd>WhichKey '' s \"<cr>", desc = "vim :: view keymaps (select)" },
+			{ "<Leader>vkS", "<cmd>WhichKey '' S \"<cr>", desc = "vim :: view keymaps (select by line)" },
+		},
 		opts = {},
 	},
 	{
@@ -24,27 +34,17 @@ return {
 		end,
 	},
 	{
-		"3rd/image.nvim",
-		lazy = true,
-		opts = {
-			backend = "kitty",
-		},
-	},
-	{
-		"s1n7ax/nvim-window-picker",
+		"folke/flash.nvim",
 		event = "VeryLazy",
-		version = "^2",
-		opts = {
-			hint = "floating-big-letter",
-			filter_rules = {
-				include_current_win = false,
-				autoselect_one = true,
-				bo = {
-					filetype = { "neo-tree", "neo-tree-popup", "notify" },
-					buftype = { "terminal", "quickfix" },
-				},
-			},
+		-- stylua: ignore
+		keys = {
+			{ "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash :: jump" },
+			{ "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash :: treesitter" },
+			{ "r", mode = "o", function() require("flash").remote() end, desc = "flash :: remote" },
+			{ "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "flash :: treesitter search" },
+			{ "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "flash :: toggle search" }
 		},
+		opts = {},
 	},
 	{
 		"folke/persistence.nvim",
@@ -80,7 +80,8 @@ return {
 		"ahmedkhalf/project.nvim",
 		lazy = false, -- otherwise, the projects file loads slow enough that entries don't appear in telescope
 		opts = {
-			manual_mode = false,
+			scope_chdir = "tab",
+			manual_mode = true,
 			detection_methods = { "lsp", "pattern" },
 			patterns = { "flake.nix", ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
 			silent_chdir = false,
@@ -95,6 +96,7 @@ return {
 				end,
 				desc = "telescope :: projects",
 			},
+			{ "<Leader>vpp", "<cmd>ProjectRoot<cr>", desc = "cd to project root (scope: tab)" },
 		},
 		config = function(plugin, opts)
 			require("project_nvim").setup(opts)

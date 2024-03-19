@@ -4,6 +4,14 @@ return {
 		event = "LspAttach",
 		config = function(plugin, opts)
 			local dap = require("dap")
+			dap.adapters.codelldb = {
+				type = "server",
+				port = "${port}",
+				executable = {
+					command = "codelldb",
+					args = { "--port", "${port}" },
+				},
+			}
 		end,
 	},
 	{
@@ -11,6 +19,7 @@ return {
 		event = "LspAttach",
 		dependencies = {
 			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio",
 		},
 		opts = {},
 		config = function(plugin, opts)
