@@ -1,5 +1,50 @@
 return {
 	{
+		-- display keymap hints
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		keys = {
+			{ "<Leader>vkk", '<cmd>WhichKey "<cr>', desc = "vim :: view keymaps (all)" },
+			{ "<Leader>vkn", "<cmd>WhichKey '' n \"<cr>", desc = "vim :: view keymaps (normal)" },
+			{ "<Leader>vki", "<cmd>WhichKey '' i \"<cr>", desc = "vim :: view keymaps (insert)" },
+			{ "<Leader>vkc", "<cmd>WhichKey '' c \"<cr>", desc = "vim :: view keymaps (cmdline)" },
+			{ "<Leader>vkv", "<cmd>WhichKey '' v \"<cr>", desc = "vim :: view keymaps (visual)" },
+			{ "<Leader>vkV", "<cmd>WhichKey '' V \"<cr>", desc = "vim :: view keymaps (visual by line)" },
+			{ "<Leader>vks", "<cmd>WhichKey '' s \"<cr>", desc = "vim :: view keymaps (select)" },
+			{ "<Leader>vkS", "<cmd>WhichKey '' S \"<cr>", desc = "vim :: view keymaps (select by line)" },
+		},
+		opts = {},
+	},
+	{
+		"mrjones2014/legendary.nvim",
+		version = "^2",
+		dependencies = {
+			"kkharji/sqlite.lua",
+		},
+		priority = 10000,
+		lazy = false,
+		opts = {
+			extensions = {
+				lazy_nvim = true,
+				which_key = { auto_register = true },
+				nvim_tree = true,
+				diffview = true,
+				smart_splits = {
+					directions = { "h", "j", "k", "l" },
+					mods = {
+						move = "<M>",
+						resize = "<C>",
+						swap = "<M-S>",
+					},
+				},
+			},
+		},
+	},
+	{
 		"lukas-reineke/indent-blankline.nvim",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
@@ -21,8 +66,8 @@ return {
 				include_current_win = false,
 				autoselect_one = true,
 				bo = {
-					filetype = { "neo-tree", "neo-tree-popup", "notify" },
-					buftype = { "terminal", "quickfix" },
+					filetype = { "neo-tree", "neo-tree-popup", "notify", "Trouble", "NvimTree" },
+					buftype = { "terminal", "quickfix", "nofile" },
 				},
 			},
 		},
@@ -40,6 +85,7 @@ return {
 	},
 	{
 		"sindrets/winshift.nvim",
+		enabled = false,
 		dependencies = {
 			"s1n7ax/nvim-window-picker",
 		},
@@ -57,91 +103,36 @@ return {
 		},
 	},
 	{
-		"nvim-lualine/lualine.nvim",
+		"kwkarlwang/bufresize.nvim",
+		enabled = false,
+		opts = {},
+	},
+	{
+		"mrjones2014/smart-splits.nvim",
 		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"folke/noice.nvim",
+			"kwkarlwang/bufresize.nvim",
 		},
-		init = function()
-			vim.opt.termguicolors = true
-		end,
-		opts = function(plugin, opts)
-			local noice = require("noice")
-			local status = noice.api.status
+		version = "^1",
+		build = "./kitty/install-kittens.bash",
+		opts = function()
 			return {
-				options = {
-					theme = "auto",
-					icons_enabled = true,
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
-					always_divide_middle = true,
+				ignored_buftypes = {
+					"nofile",
+					"quickfix",
+					"prompt",
 				},
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "branch", "diagnostics" },
-					lualine_c = { "hostname", { "filename", path = 1 }, "diff" },
-					lualine_x = {
-						{ status.message.get_hl, cond = status.message.has },
-						{ status.command.get, cond = status.command.has, color = { fg = "#ff9e64" } },
-						{ status.mode.get, cond = status.mode.has, color = { fg = "#ff9e64" } },
-						{ status.search.get, cond = status.search.has, color = { fg = "#ff9e64" } },
-						"encoding",
-						"fileformat",
-					},
-					lualine_y = { "filetype" },
-					lualine_z = { "location" },
+				ignored_filetypes = {
+					"NvimTree",
+					"Trouble",
 				},
-				inactive_sections = {
-					lualine_a = {},
-					lualine_b = {},
-					lualine_c = { "hostname", { "filename", path = 1 } },
-					lualine_x = { "location" },
-					lualine_y = {},
-					lualine_z = {},
-				},
-				tabline = {
-					lualine_a = {
-						"tabs",
-						-- {
-						-- 	"buffers",
-						-- 	filetype_names = {
-						-- 		TelescopePrompt = "Telescope",
-						-- 		dashboard = "Dashboard",
-						-- 		packer = "Packer",
-						-- 		fzf = "FZF",
-						-- 		alpha = "Alpha",
-						-- 		NvimTree = "NvimTree",
-						-- 	},
-						-- },
-					},
-					lualine_b = { "hostname", { "filename", path = 2 }, "branch" },
-					lualine_c = {},
-					lualine_x = {},
-					lualine_y = { "datetime" },
-					lualine_z = {},
-				},
-				-- winbar = {
-				-- 	lualine_a = {},
-				-- 	lualine_b = {},
-				-- 	lualine_c = { "hostname", { "filename", path = 1 } },
-				-- 	lualine_x = {},
-				-- 	lualine_y = {},
-				-- 	lualine_z = {},
+				at_edge = "stop",
+				cursor_follows_swapped_bufs = true,
+				move_cursor_same_row = false,
+				-- resize_mode = {
+				-- 	hooks = {
+				-- 		on_leave = require("bufresize").register,
+				-- 	},
 				-- },
-				-- inactive_winbar = {
-				-- 	lualine_a = {},
-				-- 	lualine_b = {},
-				-- 	lualine_c = { "hostname", { "filename", path = 1 } },
-				-- 	lualine_x = {},
-				-- 	lualine_y = {},
-				-- 	lualine_z = {},
-				-- },
-				extensions = {
-					"lazy",
-					"nvim-tree",
-					"nvim-dap-ui",
-					"trouble",
-				},
 			}
 		end,
 	},

@@ -10,7 +10,47 @@ return {
 		version = "v2.*",
 	},
 	{
+		"ms-jpq/coq.artifacts",
+		enabled = false,
+		lazy = true,
+		branch = "artifacts",
+	},
+	{
+		"ms-jpq/coq.thirdparty",
+		enabled = false,
+		lazy = true,
+		branch = "3p",
+		opts = {
+			{ src = "dap" },
+		},
+		config = function(_, opts)
+			require("coq_3p")(opts)
+		end,
+	},
+	{
+		"ms-jpq/coq_nvim",
+		enabled = false,
+		branch = "coq",
+		dependencies = {
+			"ms-jpq/coq.artifacts",
+			"ms-jpq/coq.thirdparty",
+		},
+		build = ":COQdeps",
+		init = function()
+			vim.g.coq_settings = {
+				auto_start = "shut-up",
+				xdg = true,
+				clients = {
+					tmux = {
+						enabled = false,
+					},
+				},
+			}
+		end,
+	},
+	{
 		"hrsh7th/nvim-cmp",
+		-- enabled = false,
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/cmp-nvim-lsp",
@@ -22,7 +62,7 @@ return {
 			},
 		},
 		event = { "InsertEnter", "CmdLineEnter" },
-		config = function(plugin, opts)
+		config = function(_, _)
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			cmp.setup({

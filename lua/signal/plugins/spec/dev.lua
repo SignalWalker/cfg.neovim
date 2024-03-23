@@ -27,7 +27,7 @@ return {
 	},
 	{
 		"folke/todo-comments.nvim",
-		lazy = false,
+		event = { "LspAttach" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		keys = {
 			{ "<Leader>xt", "<cmd>TodoTrouble<cr>", desc = "trouble :: toggle (todos)" },
@@ -71,12 +71,6 @@ return {
 	{
 		"numToStr/Comment.nvim",
 		lazy = false,
-		-- keys = {
-		--  { '<Leader>cl', '<Plug>(comment_toggle_linewise)', desc = 'comment :: toggle line (linewise)' },
-		--  { '<Leader>cb', '<Plug>(comment_toggle_blockwise)', desc = 'comment :: toggle line (blockwise)' },
-		--  { '<Leader>cl', '<Plug>(comment_toggle_linewise_visual)', mode = 'x', desc = 'comment :: toggle linewise' },
-		--  { '<Leader>cb', '<Plug>(comment_toggle_blockwise_visual)', mode = 'x', desc = 'comment :: toggle blockwise' },
-		-- },
 		opts = {
 			mappings = {
 				basic = true,
@@ -119,5 +113,45 @@ return {
 		config = function(_, opts)
 			require("distant"):setup(opts)
 		end,
+	},
+	{
+		"nvim-pack/nvim-spectre",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+		build = "/usr/bin/env bash ./build.sh",
+		cmd = { "Spectre" },
+		keys = {
+			{
+				"<Leader>fpr",
+				function()
+					require("spectre").toggle()
+				end,
+				desc = "Spectre :: toggle",
+			},
+			{
+				"<Leader>sw",
+				function()
+					require("spectre").open_visual({ select_word = true })
+				end,
+				desc = "Spectre :: Search current word",
+			},
+			{
+				"<Leader>sw",
+				mode = { "v" },
+				function()
+					require("spectre").open_visual()
+				end,
+				desc = "Spectre :: Search current word",
+			},
+		},
+		opts = {
+			default = {
+				replace = {
+					cmd = "oxi",
+				},
+			},
+		},
 	},
 }

@@ -11,7 +11,7 @@
 return {
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
-		enabled = false,
+		-- enabled = false,
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
@@ -22,7 +22,7 @@ return {
 			override_file_sorter = true,
 			case_mode = "smart_case",
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			local ts = require("telescope")
 			ts.setup({ extensions = { ["fzf"] = opts } })
 			require("telescope").load_extension("fzf") -- TODO :: fix cmake

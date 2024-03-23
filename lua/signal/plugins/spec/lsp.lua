@@ -1,4 +1,4 @@
-local set_lsp_keymaps = function(client, bufnr)
+local set_lsp_keymaps = function(_, bufnr)
 	local kopts_base = { noremap = true, silent = true, buffer = bufnr }
 	local kopts = function(desc)
 		if desc == nil then
@@ -122,12 +122,55 @@ return {
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-treesitter/nvim-treesitter",
 		},
-		opts = function(plugin, opts)
+		opts = function(_, _)
 			return {
 				adapters = {
 					require("rustaceanvim.neotest"),
 				},
 			}
+		end,
+	},
+	{
+		"saecki/crates.nvim",
+		dependencies = {
+			"hrsh7th/nvim-cmp",
+			-- "ms-jpq/coq_nvim",
+		},
+		-- tag = "stable",
+		event = { "BufRead Cargo.toml" },
+		opts = {
+			src = {
+				cmp = {
+					enabled = true,
+				},
+				coq = {
+					enabled = false,
+					name = "crates.nvim",
+				},
+			},
+			lsp = {
+				enabled = true,
+				on_attach = set_lsp_keymaps,
+				actions = true,
+				completion = true,
+				hover = true,
+			},
+		},
+		init = function()
+			vim.api.nvim_create_autocmd("BufRead", {
+				group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+				pattern = "Cargo.toml",
+				callback = function()
+					local cmp = require("cmp")
+					cmp.setup.buffer({
+						sources = cmp.config.sources(
+							{ { name = "crates" } },
+							{ { name = "buffer" } },
+							{ { name = "async_path" } }
+						),
+					})
+				end,
+			})
 		end,
 	},
 	{
@@ -230,6 +273,7 @@ return {
 	},
 	{
 		"folke/neodev.nvim", -- automatic configuration for editing neovim config
+		lazy = false,
 		opts = {
 			library = {
 				enabled = true,
@@ -238,13 +282,45 @@ return {
 				runtime = true,
 			},
 			override = function(root_dir, library)
-				if root_dir:find("/home/ash/projects/cfg/neovim", 1, true) == 1 then
+				if root_dir:find("/etc/nixos", 1, true) == 1 then
 					library.enabled = true
-					library.runtime = true
-					library.types = true
 					library.plugins = true
+				elseif root_dir:find("nvim", 1, true) or root_dir:find("neovim", 1, true) then
+					library.enabled = true
+					library.plugins = true
+					library.types = true
+					library.runtime = true
 				end
 			end,
+			lspconfig = true,
+			pathStrict = false,
+		},
+	},
+	{
+		"smjonas/inc-rename.nvim",
+		event = { "LspAttach" },
+		keys = {
+			{
+				"<Leader>rn",
+				function()
+					return ":IncRename " .. vim.fn.expand("<cword>")
+				end,
+				desc = "lsp :: rename",
+				expr = true,
+			},
+		},
+		opts = {},
+	},
+	{
+		"slint-ui/vim-slint",
+	},
+	{
+		"dgagn/diagflow.nvim",
+		enabled = false,
+		event = { "LspAttach" },
+		opts = {
+			show_borders = true,
+			show_sign = false,
 		},
 	},
 	{
@@ -252,14 +328,16 @@ return {
 		dependencies = {
 			"folke/neodev.nvim",
 			"hrsh7th/nvim-cmp",
+			-- "ms-jpq/coq_nvim",
 		},
 		opts = {
 			["lua_ls"] = {},
 			["tailwindcss"] = {},
 			["taplo"] = {},
 			["jsonls"] = {},
+			["slint_lsp"] = {},
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			local lsp = require("lspconfig")
 
 			opts["nixd"] = {
@@ -274,6 +352,7 @@ return {
 			}
 
 			local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+			-- local cmp_capabilities = require("coq").lsp_ensure_capabilities()
 			for srv, cfg in pairs(opts) do
 				if cfg["on_attach"] == nil then
 					cfg.on_attach = set_lsp_keymaps

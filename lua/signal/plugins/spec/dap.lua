@@ -1,8 +1,9 @@
 return {
 	{
 		"mfussenegger/nvim-dap",
+		dependencies = {},
 		event = "LspAttach",
-		config = function(plugin, opts)
+		config = function(_, _)
 			local dap = require("dap")
 			dap.adapters.codelldb = {
 				type = "server",

@@ -53,6 +53,11 @@ return {
 				-- stylua: ignore
 				dashboard.button('s', "勒> Restore Session", function() require('persistence').load() end),
 				dashboard.button("l", "鈴> Lazy", "<cmd>Lazy<CR>"),
+				dashboard.button("n", "N> Edit Neovim Config", function()
+					local cfg_dir = vim.env.XDG_CONFIG_HOME .. "/nvim"
+					vim.cmd.tcd(cfg_dir)
+					vim.cmd.edit(cfg_dir .. "/init.lua")
+				end),
 				dashboard.button("q", " > Quit NVIM", "<cmd>qa<CR>"),
 			}
 			for _, button in ipairs(dashboard.section.buttons.val) do
@@ -81,7 +86,7 @@ return {
 			vim.api.nvim_create_autocmd({ "User" }, {
 				group = vim.api.nvim_create_augroup("UpdateDashboard", { clear = true }),
 				pattern = "LazyVimStarted",
-				callback = function(args)
+				callback = function(_)
 					local stats = require("lazy").stats()
 					local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
 					local stats_str = stats.loaded .. "/" .. stats.count .. " Plugins Loaded (" .. ms .. " ms)"

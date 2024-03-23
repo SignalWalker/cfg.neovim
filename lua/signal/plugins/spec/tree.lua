@@ -4,6 +4,10 @@ return {
 		enabled = false,
 		branch = "chad",
 		build = "python3 -m chadtree deps",
+		keys = {
+			{ "<Leader>tt", "<cmd>CHADopen<cr>", desc = "filetree :: toggle" },
+			{ "<Leader>tv", "<cmd>CHADopen --version-ctl<cr>", desc = "filetree :: open at vc root" },
+		},
 		opts = {
 			xdg = true,
 			keymap = {
@@ -11,11 +15,12 @@ return {
 				h_split = { "<C-s>" },
 				open_sys = { "<M-o>" },
 			},
+			theme = {
+				text_color_set = "nerdtree_syntax_dark",
+			},
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			vim.api.nvim_set_var("chadtree_settings", opts)
-			vim.keymap.set("n", "<Leader>tt", "<cmd>CHADopen<cr>", { desc = "open filetree" })
-			vim.keymap.set("n", "<Leader>tv", "<cmd>CHADopen --version-ctl<cr>", { desc = "open filetree at vc root" })
 		end,
 	},
 	{
@@ -29,6 +34,9 @@ return {
 			"MunifTanjim/nui.nvim",
 			"3rd/image.nvim",
 			"s1n7ax/nvim-window-picker",
+		},
+		keys = {
+			{ "<Leader>tt", "<cmd>Neotree toggle reveal action=focus<cr>", desc = "filetree :: toggle" },
 		},
 		opts = {
 			enable_cursor_hijack = true,
@@ -49,8 +57,29 @@ return {
 				},
 			},
 		},
+	},
+	{
+		"stevearc/oil.nvim",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
 		keys = {
-			{ "<Leader>tt", "<cmd>Neotree toggle reveal action=focus<cr>", desc = "filetree :: toggle" },
+			{ "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+		},
+		opts = {
+			default_file_explorer = true,
+			experimental_watch_for_changes = true,
+			delete_to_trash = true,
+			lsp_file_methods = {
+				autosave_changes = true,
+			},
+			view_options = {
+				natural_order = false,
+				sort = {
+					{ "type", "asc" },
+					{ "name", "asc" },
+				},
+			},
 		},
 	},
 	{
@@ -60,75 +89,139 @@ return {
 		version = "*",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
+			"s1n7ax/nvim-window-picker",
 		},
 		keys = {
 			{ "<Leader>tt", "<cmd>NvimTreeToggle<cr>", desc = "filetree :: toggle" },
 			{ "<Leader>tf", "<cmd>NvimTreeFindFile<cr>", desc = "filetree :: find file" },
 		},
-		init = function()
-			vim.g.loaded_netrw = 1
-			vim.g.loaded_netrwPlugin = 1
-		end,
-		opts = {
-			disable_netrw = true,
-			hijack_netrw = true,
+		-- init = function()
+		-- 	vim.g.loaded_netrw = 1
+		-- 	vim.g.loaded_netrwPlugin = 1
+		-- end,
+		opts = function(_, _)
+			return {
+				disable_netrw = true,
+				hijack_netrw = false,
 
-			sort_by = "extension",
+				sync_root_with_cwd = true,
+				respect_buf_cwd = true,
+				reload_on_bufenter = true,
 
-			sync_root_with_cwd = true,
-			respect_buf_cwd = true,
+				hijack_cursor = true,
+				select_prompts = true,
 
-			hijack_cursor = true,
-
-			reload_on_bufenter = true,
-
-			renderer = {
-				group_empty = true,
-				full_name = true,
-				root_folder_label = false,
-				special_files = {
-					"Cargo.toml",
-					"Makefile",
-					"README.md",
-					"readme.md",
-					"flake.nix",
+				sort = {
+					sorter = "extension",
+					folders_first = true,
 				},
-				highlight_opened_files = "name",
-				indent_markers = {
+
+				view = {
+					preserve_window_proportions = true,
+					signcolumn = "yes",
+					width = {
+						min = 16,
+						max = 32,
+						padding = 1,
+					},
+				},
+
+				renderer = {
+					group_empty = true,
+					full_name = true,
+					root_folder_label = false,
+					special_files = {
+						"Cargo.toml",
+						"Makefile",
+						"README.md",
+						"readme.md",
+						"flake.nix",
+					},
+					highlight_git = "icon",
+					highlight_diagnostics = "icon",
+					highlight_opened_files = "none",
+					highlight_modified = "name",
+					indent_markers = {
+						enable = true,
+					},
+					icons = {
+						web_devicons = {
+							folder = {
+								enable = true,
+							},
+						},
+					},
+				},
+
+				hijack_directories = {
+					enable = false, -- defer to oil.nvim
+					auto_open = false,
+				},
+
+				update_focused_file = {
+					enable = true,
+					update_root = false,
+				},
+
+				git = {
+					enable = true,
+					show_on_open_dirs = false,
+				},
+
+				diagnostics = {
+					enable = true,
+					show_on_dirs = true,
+					show_on_open_dirs = false,
+					severity = {
+						min = vim.diagnostic.severity.WARN,
+					},
+				},
+
+				modified = {
+					enable = true,
+					show_on_dirs = true,
+					show_on_open_dirs = false,
+				},
+
+				filters = {
+					git_ignored = true,
+					dotfiles = true,
+				},
+
+				filesystem_watchers = {
 					enable = true,
 				},
-				icons = {
-					webdev_colors = true,
+
+				actions = {
+					use_system_clipboard = true,
+					change_dir = {
+						enable = true,
+						restrict_above_cwd = true,
+					},
+					open_file = {
+						window_picker = {
+							enable = true,
+							picker = require("window-picker").pick_window,
+						},
+					},
 				},
-			},
-			filters = {
-				dotfiles = true,
-			},
-			filesystem_watchers = {
-				enable = true,
-			},
-			update_focused_file = {
-				enable = true,
-				update_root = true,
-			},
-			git = {
-				enable = true,
-				show_on_open_dirs = false,
-			},
-			diagnostics = {
-				show_on_dirs = true,
-				show_on_open_dirs = false,
-			},
-			tab = {
-				sync = {
-					open = true,
-					close = true,
+
+				trash = {
+					cmd = "trash",
 				},
-			},
-		},
+
+				tab = {
+					sync = {
+						open = false,
+						close = false,
+					},
+				},
+			}
+		end,
 	},
 	{
 		"antosha417/nvim-lsp-file-operations",
+		-- enabled = false,
 		event = "LspAttach",
 		dependencies = {
 			"nvim-lua/plenary.nvim",

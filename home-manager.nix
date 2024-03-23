@@ -54,9 +54,14 @@ in {
         vimdiffAlias = true;
         defaultEditor = true;
         extraPackages = with pkgs; [
+          universal-ctags
           tree-sitter
           glow # markdown previews
           fzf
+
+          cmake # telescope-fzf-native
+          gnumake # telescope-fzf-native
+
           lua-language-server
           imagemagick # 3rd/image.nvim
           delta # debugloop/telescope-undo.nvim
@@ -67,6 +72,10 @@ in {
           nixd # nix language server
           tailwindcss-language-server # css language server
           vscode-langservers-extracted # json, among other things
+
+          trash-cli # nvim-tree trash
+
+          # slint-lsp
         ];
         # python
         withPython3 = true;
@@ -80,12 +89,32 @@ in {
       };
 
       programs.kitty.extraConfig = ''
-        # # vim-kitty-navigator
-        # map kitty_mod+h
-        # kitty-scrollback.nvim
+        ## kitty-scrollback.nvim
         # action_alias kitty_scrollback_nvim kitten ${config.xdg.dataHome}/nvim/lazy/kitty-scrollback.nvim/python/kitty_scrollback_nvim.py
         # map kitty_mod+/ kitty_scrollback_nvim
         # map kitty_mod+alt+/ kitty_scrollback_nvim --config ksb_builtin_last_cmd_output
+
+        ## smart-splits.nvim
+        map alt+h kitten pass_keys.py neighboring_window left   alt+h
+        map alt+j kitten pass_keys.py neighboring_window bottom alt+j
+        map alt+k kitten pass_keys.py neighboring_window top    alt+k
+        map alt+l kitten pass_keys.py neighboring_window right  alt+l
+
+        map kitty_mod+h kitten pass_keys.py neighboring_window left   alt+h
+        map kitty_mod+j kitten pass_keys.py neighboring_window bottom alt+j
+        map kitty_mod+k kitten pass_keys.py neighboring_window top    alt+k
+        map kitty_mod+l kitten pass_keys.py neighboring_window right  alt+l
+
+        map ctrl+h kitten pass_keys.py relative_resize left  3 ctrl+h
+        map ctrl+j kitten pass_keys.py relative_resize down  3 ctrl+j
+        map ctrl+k kitten pass_keys.py relative_resize up    3 ctrl+k
+        map ctrl+l kitten pass_keys.py relative_resize right 3 ctrl+l
+
+        map kitty_mod+alt+shift+h kitten pass_keys.py relative_resize left  3 ctrl+h
+        map kitty_mod+alt+shift+j kitten pass_keys.py relative_resize down  3 ctrl+j
+        map kitty_mod+alt+shift+k kitten pass_keys.py relative_resize up    3 ctrl+k
+        map kitty_mod+alt+shift+l kitten pass_keys.py relative_resize right 3 ctrl+l
+
       '';
     }
     (lib.mkIf (ash.configPath == null) {

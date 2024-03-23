@@ -1,32 +1,12 @@
 -- core plugins
 return {
 	{
-		-- display keymap hints
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		keys = {
-			{ "<Leader>vkk", '<cmd>WhichKey "<cr>', desc = "vim :: view keymaps (all)" },
-			{ "<Leader>vkn", "<cmd>WhichKey '' n \"<cr>", desc = "vim :: view keymaps (normal)" },
-			{ "<Leader>vki", "<cmd>WhichKey '' i \"<cr>", desc = "vim :: view keymaps (insert)" },
-			{ "<Leader>vkc", "<cmd>WhichKey '' c \"<cr>", desc = "vim :: view keymaps (cmdline)" },
-			{ "<Leader>vkv", "<cmd>WhichKey '' v \"<cr>", desc = "vim :: view keymaps (visual)" },
-			{ "<Leader>vkV", "<cmd>WhichKey '' V \"<cr>", desc = "vim :: view keymaps (visual by line)" },
-			{ "<Leader>vks", "<cmd>WhichKey '' s \"<cr>", desc = "vim :: view keymaps (select)" },
-			{ "<Leader>vkS", "<cmd>WhichKey '' S \"<cr>", desc = "vim :: view keymaps (select by line)" },
-		},
-		opts = {},
-	},
-	{
 		"nvim-treesitter/nvim-treesitter",
 		build = function()
 			require("nvim-treesitter.install").update({ with_sync = true })()
 		end,
 		opts = {
-			ensure_installed = { "lua", "c", "rust" },
+			ensure_installed = { "vim", "lua", "bash", "c", "rust", "regex", "markdown", "markdown_inline" },
 			auto_install = true,
 		},
 		config = function(plugin, opts)
@@ -98,7 +78,7 @@ return {
 			},
 			{ "<Leader>vpp", "<cmd>ProjectRoot<cr>", desc = "cd to project root (scope: tab)" },
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			require("project_nvim").setup(opts)
 			require("telescope").load_extension("projects")
 		end,

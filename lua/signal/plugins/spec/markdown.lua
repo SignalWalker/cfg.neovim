@@ -9,16 +9,21 @@ return {
 	},
 	{
 		"epwalsh/obsidian.nvim",
-		version = "*",
+		version = "^3",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-telescope/telescope.nvim",
 			"hrsh7th/nvim-cmp",
+			-- "ms-jpq/coq_nvim",
 		},
 		event = {
 			"BufReadPre /home/ash/notes/**.md",
 			"BufNewFile /home/ash/notes/**.md",
+		},
+		cmd = {
+			"ObsidianYesterday",
+			"ObsidianToday",
 		},
 		opts = {
 			workspaces = {
@@ -90,7 +95,7 @@ return {
 					vim.keymap.set(
 						"n",
 						"<Leader>ody",
-						"<cmd>ObsidianYesterday<cr>",
+						"<cmd>ObsidianToday -1<cr>",
 						kopts("Obsidian :: Open yesterday's note")
 					)
 					vim.keymap.set("n", "<Leader>ot", "<cmd>ObsidianTemplate<cr>", kopts("Obsidian :: Open template"))

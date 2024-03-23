@@ -1,7 +1,7 @@
 local tokyonight_opts = {
 	style = "storm",
 	light_style = "day",
-	sidebars = { "qf", "help", "NvimTree" },
+	sidebars = { "qf", "help", "NvimTree", "CHADTree" },
 	transparent = true,
 }
 
@@ -37,7 +37,7 @@ return {
 		keys = {
 			{ "<Leader>vct", swap_tokyonight, desc = "toggle light/dark theme (tokyonight)" },
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			local tk = require("tokyonight")
 			tk.setup(opts)
 		end,
@@ -55,7 +55,7 @@ return {
 		},
 		opts = {
 			input = {
-				enabled = false,
+				enabled = true,
 			},
 			select = {
 				enabled = true,
@@ -81,8 +81,8 @@ return {
 			presets = {
 				bottom_search = true,
 				command_palette = true,
-				long_message_to_split = true,
-				inc_rename = false,
+				long_message_to_split = false,
+				inc_rename = true,
 				lsp_doc_border = true,
 			},
 			routes = {
@@ -100,7 +100,7 @@ return {
 			{ "<Leader>fvm", "<cmd>Noice telescope<cr>", desc = "telescope :: message history" },
 			{ "<Leader>vns", "<cmd>Noice stats<cr>", desc = "noice :: stats" },
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			local noice = require("noice")
 			noice.setup(opts)
 
@@ -117,6 +117,7 @@ return {
 	},
 	{
 		"giusgad/pets.nvim",
+		lazy = true,
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			{
