@@ -63,7 +63,7 @@ return {
 			scope_chdir = "tab",
 			manual_mode = true,
 			detection_methods = { "lsp", "pattern" },
-			patterns = { "flake.nix", ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+			patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
 			silent_chdir = false,
 			exclude_dirs = { "/nix/store/*", "~/.local/share/cargo/*" },
 			-- datapath = vim.fn.stdpath("cache") .. "/projects/",

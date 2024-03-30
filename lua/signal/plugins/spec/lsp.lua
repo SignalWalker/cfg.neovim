@@ -234,10 +234,23 @@ return {
 						)
 						vim.keymap.set(
 							"n",
-							"<Leader>lpf",
+							"<Leader>lpc",
 							"<cmd>RustLsp openCargo<cr>",
 							kopts("rust :: open Cargo.toml")
 						)
+						vim.keymap.set(
+							"n",
+							"<Leader>lpr",
+							"<cmd>RustLsp runnables<cr>",
+							kopts("Rust :: list runnables")
+						)
+						vim.keymap.set(
+							"n",
+							"<Leader>rr",
+							"<cmd>RustLsp runnables!<cr>",
+							kopts("Rust :: run last used runnable")
+						)
+
 						vim.keymap.set("n", "glp", "<cmd>RustLsp parentModule<cr>", kopts("Go to parent module (rust)"))
 						vim.keymap.set(
 							"n",
