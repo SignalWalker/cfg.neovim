@@ -7,9 +7,14 @@ end
 return {
 	{
 		"folke/trouble.nvim",
+		-- branch = "dev",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
+		-- cmd = {
+		-- 	"Trouble",
+		-- },
 		keys = {
 			{ "<Leader>xx", trouble_toggle(), desc = "trouble :: toggle" },
+			{ "<Leader>xb", trouble_toggle("buffer_diagnostics"), desc = "trouble :: toggle (buffer diagnostics)" },
 			{
 				"<Leader>xw",
 				trouble_toggle("workspace_diagnostics"),
