@@ -21,12 +21,12 @@ local swap_tokyonight = function()
 	vim.fn.system(kitty_cmd)
 end
 
-local refresh_tokyonight = function(transparency)
-	local opts = vim.deepcopy(tokyonight_opts)
-	opts.transparency = transparency
-	require("tokyonight").setup(opts)
-	vim.cmd([[colorscheme tokyonight]])
-end
+-- local refresh_tokyonight = function(transparency)
+-- 	local opts = vim.deepcopy(tokyonight_opts)
+-- 	opts.transparency = transparency
+-- 	require("tokyonight").setup(opts)
+-- 	vim.cmd([[colorscheme tokyonight]])
+-- end
 
 return {
 	{
@@ -44,7 +44,7 @@ return {
 	},
 	{
 		"folke/drop.nvim",
-		enabled = false, -- FIX :: https://github.com/folke/drop.nvim/issues/15
+		enabled = not tokyonight_opts["transparent"], -- FIX :: https://github.com/folke/drop.nvim/issues/15
 		event = "VimEnter",
 		opts = {},
 	},
