@@ -56,6 +56,11 @@ return {
 			},
 		},
 	},
+	-- {
+	-- 	'GnikDroy/projections.nvim',
+	-- 	opts = {
+	-- 	}
+	-- },
 	{
 		"ahmedkhalf/project.nvim",
 		lazy = false, -- otherwise, the projects file loads slow enough that entries don't appear in telescope
