@@ -64,7 +64,20 @@ return {
 			"nvim-tree/nvim-web-devicons",
 		},
 		keys = {
-			{ "-", "<cmd>Oil<cr>", desc = "Open parent directory" },
+			{
+				"-",
+				function()
+					require("oil").open()
+				end,
+				desc = "Open parent directory",
+			},
+			{
+				"_",
+				function()
+					require("oil").open(vim.loop.cwd())
+				end,
+				desc = "Open current working directory",
+			},
 		},
 		opts = {
 			default_file_explorer = true,
@@ -73,6 +86,13 @@ return {
 			lsp_file_methods = {
 				autosave_changes = true,
 			},
+			columns = {
+				"icon",
+				"permissions",
+				"size",
+				{ "mtime", format = "%Y-%m-%d %H:%M" },
+			},
+			constrain_cursor = "name",
 			view_options = {
 				natural_order = false,
 				sort = {
@@ -84,7 +104,7 @@ return {
 	},
 	{
 		"nvim-tree/nvim-tree.lua",
-		-- enabled = false,
+		enabled = false,
 		lazy = false,
 		version = "*",
 		dependencies = {
@@ -221,7 +241,7 @@ return {
 	},
 	{
 		"antosha417/nvim-lsp-file-operations",
-		-- enabled = false,
+		enabled = false,
 		event = "LspAttach",
 		dependencies = {
 			"nvim-lua/plenary.nvim",

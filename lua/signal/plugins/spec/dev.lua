@@ -1,42 +1,67 @@
-local trouble_toggle = function(mode)
+local function toggle_trouble(mode, opts)
+	local desc = {
+		mode = mode,
+		focus = false,
+		preview = {
+			type = "split",
+			relative = "win",
+			position = "right",
+			size = 0.3,
+		},
+	}
+	if opts ~= nil then
+		for k, v in pairs(opts) do
+			desc[k] = v
+		end
+	end
 	return function()
-		require("trouble").toggle(mode)
+		require("trouble").toggle(desc)
 	end
 end
 
 return {
 	{
 		"folke/trouble.nvim",
-		-- branch = "dev",
+		branch = "dev",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		-- cmd = {
-		-- 	"Trouble",
-		-- },
-		keys = {
-			{ "<Leader>xx", trouble_toggle(), desc = "trouble :: toggle" },
-			{ "<Leader>xb", trouble_toggle("buffer_diagnostics"), desc = "trouble :: toggle (buffer diagnostics)" },
-			{
-				"<Leader>xw",
-				trouble_toggle("workspace_diagnostics"),
-				desc = "trouble :: toggle (workspace diagnostics)",
-			},
-			{
-				"<Leader>xd",
-				trouble_toggle("document_diagnostics"),
-				desc = "trouble :: toggle (document diagnostics)",
-			},
-			{ "<Leader>xq", trouble_toggle("quickfix"), desc = "trouble :: toggle (quickfix)" },
-			{ "<Leader>xl", trouble_toggle("loclist"), desc = "trouble :: toggle (quickfix)" },
+		cmd = {
+			"Trouble",
 		},
-		opts = {},
+		keys = {
+			{ "<Leader>xx", toggle_trouble("cascade"), desc = "toggle diagnostics" },
+			{
+				"<Leader>xb",
+				toggle_trouble("diagnostics", { filter = { buf = 0 } }),
+				desc = "toggle diagnostics (buffer)",
+			},
+			{ "<Leader>xQ", toggle_trouble("qflist"), desc = "toggle quickfix list" },
+			{ "<Leader>xL", toggle_trouble("loclist"), desc = "toggle loclist" },
+			{ "<Leader>xs", toggle_trouble("symbols", { preview = { type = "main" } }), desc = "toggle symbols" },
+		},
+		opts = {
+			modes = {
+				cascade = {
+					mode = "diagnostics",
+					filter = function(items)
+						local severity = vim.diagnostic.severity.HINT
+						for _, item in ipairs(items) do
+							severity = math.min(severity, item.severity)
+						end
+						return vim.tbl_filter(function(item)
+							return item.severity == severity
+						end, items)
+					end,
+				},
+			},
+		},
 	},
 	{
 		"folke/todo-comments.nvim",
 		event = { "LspAttach" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		keys = {
-			{ "<Leader>xt", "<cmd>TodoTrouble<cr>", desc = "trouble :: toggle (todos)" },
-			{ "<Leader>fpt", "<cmd>TodoTelescope<cr>", desc = "project :: list todos" },
+			{ "<Leader>xt", "<cmd>TodoTrouble<cr>", desc = "toggle todo list" },
+			{ "<Leader>fpt", "<cmd>TodoTelescope<cr>", desc = "view todo list in telescope" },
 		},
 		opts = {
 			keywords = {
@@ -75,6 +100,7 @@ return {
 	},
 	{
 		"numToStr/Comment.nvim",
+		enabled = false, -- superseded by built in functionality in neovim v0.10
 		lazy = false,
 		opts = {
 			mappings = {

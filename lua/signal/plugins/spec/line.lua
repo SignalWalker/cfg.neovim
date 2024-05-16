@@ -31,6 +31,15 @@ return {
 			local noice = require("noice")
 			local status = noice.api.status
 
+			local trouble = require("trouble")
+			local symbols = trouble.statusline({
+				mode = "lsp_document_symbols",
+				groups = {},
+				title = false,
+				filter = { range = true },
+				format = "{kind_icon}{symbol.name:Normal}",
+			})
+
 			-- local battery = {
 			-- 	function()
 			-- 		return require("battery").get_status_line()
@@ -48,17 +57,24 @@ return {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { "branch", { "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic" } } },
-					lualine_c = { "hostname", { "filename", path = 1 }, "diff" },
+					lualine_b = { "hostname", "branch" },
+					lualine_c = {
+						{ "filename", path = 1 },
+						{ symbols.get, cond = symbols.has },
+					},
 					lualine_x = {
 						{ status.message.get_hl, cond = status.message.has },
 						{ status.command.get, cond = status.command.has, color = { fg = "#ff9e64" } },
 						{ status.mode.get, cond = status.mode.has, color = { fg = "#ff9e64" } },
 						{ status.search.get, cond = status.search.has, color = { fg = "#ff9e64" } },
-						"encoding",
-						"fileformat",
+						{ "diagnostics", sources = { "nvim_lsp", "nvim_diagnostic" } },
+						"diff",
 					},
-					lualine_y = { "filetype" },
+					lualine_y = {
+						"filetype",
+						"fileformat",
+						"encoding",
+					},
 					lualine_z = { "location" },
 				},
 				inactive_sections = {
@@ -71,7 +87,7 @@ return {
 				},
 				tabline = {
 					lualine_a = { "tabs" },
-					lualine_b = { "hostname", { "filename", path = 3 }, "branch" },
+					lualine_b = {},
 					lualine_c = {},
 					lualine_x = {},
 					lualine_y = {},
@@ -79,12 +95,47 @@ return {
 				},
 				extensions = {
 					"lazy",
-					"nvim-tree",
+					-- "nvim-tree",
 					-- "chadtree",
 					"nvim-dap-ui",
 					"trouble",
+					"oil",
+					"man",
 				},
 			}
+		end,
+		config = function(_, opts)
+			vim.opt.showtabline = 0
+			local lualine = require("lualine")
+			-- workarounds for lualine's obtuse behavior about showtabline
+			vim.api.nvim_create_autocmd({ "TabNew", "TabClosed" }, {
+				pattern = "*",
+				callback = function()
+					if vim.fn.tabpagenr("$") > 1 then
+						vim.opt.showtabline = 1
+						lualine.hide({
+							place = { "tabline" },
+							unhide = true,
+						})
+					else
+						lualine.hide({
+							place = { "tabline" },
+							unhide = false,
+						})
+						vim.opt.showtabline = 0
+					end
+				end,
+			})
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
+				callback = function()
+					lualine.hide({
+						place = { "tabline" },
+					})
+					vim.opt.showtabline = 0
+				end,
+			})
+			require("lualine").setup(opts)
 		end,
 	},
 }

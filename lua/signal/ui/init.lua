@@ -1,10 +1,10 @@
 require("signal.ui.keymap")
-
+require("signal.ui.diagnostics")
 if vim.g.neovide ~= nil then
 	require("signal.ui.neovide")
 end
 
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 vim.opt.backspace = { "indent", "eol", "start" }
 
@@ -27,7 +27,7 @@ vim.opt.confirm = true
 
 vim.opt.autowriteall = true
 
-vim.opt.scrolljump = 5
+vim.opt.scrolljump = 1
 vim.opt.scrolloff = 3
 vim.opt.sidescrolloff = 5
 
@@ -39,6 +39,7 @@ vim.opt.tabstop = 3
 vim.opt.shiftwidth = 0
 vim.opt.softtabstop = -1
 vim.opt.expandtab = false
+
 vim.opt.breakindent = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true

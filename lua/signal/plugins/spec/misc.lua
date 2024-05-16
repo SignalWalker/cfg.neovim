@@ -6,7 +6,7 @@ return {
 		},
 		cmd = { "CellularAutomaton" },
 		keys = {
-			{ "<Leader>bcr", "<cmd>CellularAutomaton make_it_rain<cr>", desc = "enable gravity" },
+			{ "<Leader>bcg", "<cmd>CellularAutomaton make_it_rain<cr>", desc = "enable gravity" },
 			{ "<Leader>bcl", "<cmd>CellularAutomaton game_of_life<cr>", desc = "enable life" },
 		},
 	},

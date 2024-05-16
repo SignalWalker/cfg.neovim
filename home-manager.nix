@@ -53,6 +53,7 @@ in {
         vimAlias = true;
         vimdiffAlias = true;
         defaultEditor = true;
+        package = inputs.neovim.packages.${pkgs.system}.neovim;
         extraPackages = with pkgs; [
           universal-ctags
           tree-sitter

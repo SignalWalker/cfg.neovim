@@ -35,6 +35,7 @@ return {
 			daily_notes = {
 				folder = "daily",
 				date_format = "%Y-%m-%d",
+				template = "daily.md",
 			},
 			templates = {
 				subdir = "template",
@@ -95,7 +96,7 @@ return {
 					vim.keymap.set(
 						"n",
 						"<Leader>ody",
-						"<cmd>ObsidianToday -1<cr>",
+						"<cmd>ObsidianYesterday<cr>",
 						kopts("Obsidian :: Open yesterday's note")
 					)
 					vim.keymap.set("n", "<Leader>ot", "<cmd>ObsidianTemplate<cr>", kopts("Obsidian :: Open template"))

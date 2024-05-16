@@ -30,13 +30,13 @@ return {
 			dapui.setup(opts)
 
 			dap.listeners.before.attach.dapui_config = function()
-				require("nvim-tree.api").tree.close()
+				-- require("nvim-tree.api").tree.close()
 				require("trouble").close()
 				dapui.open()
 			end
 
 			dap.listeners.before.launch.dapui_config = function()
-				require("nvim-tree.api").tree.close()
+				-- require("nvim-tree.api").tree.close()
 				require("trouble").close()
 				dapui.open()
 			end

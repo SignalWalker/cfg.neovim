@@ -8,9 +8,19 @@ return {
 		opts = {
 			ensure_installed = { "vim", "lua", "bash", "c", "rust", "regex", "markdown", "markdown_inline" },
 			auto_install = true,
+			highlight = {
+				enable = true,
+			},
+			incremental_selection = {
+				enable = true,
+			},
 		},
+
 		config = function(plugin, opts)
 			require("nvim-treesitter.configs").setup(opts)
+			vim.o.foldenable = false
+			vim.o.foldmethod = "expr"
+			vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 		end,
 	},
 	{
@@ -90,7 +100,9 @@ return {
 	},
 	{
 		"rcarriga/nvim-notify",
-		opts = {},
+		opts = {
+			timeout = 2500,
+		},
 		keys = {
 			{
 				"<Leader>fvn",
@@ -100,7 +112,7 @@ return {
 				desc = "telescope :: notifications",
 			},
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			require("notify").setup(opts)
 			require("telescope").load_extension("notify")
 		end,

@@ -57,15 +57,45 @@ local set_lsp_keymaps = function(_, bufnr)
 
 	-- -- trouble
 	local trouble = require("trouble")
-	vim.keymap.set("n", "<Leader>xlr", function()
-		trouble.toggle("lsp_references")
-	end, kopts("trouble :: toggle (lsp references)"))
-	vim.keymap.set("n", "<Leader>xld", function()
-		trouble.toggle("lsp_definitions")
-	end, kopts("trouble :: toggle (lsp definitions)"))
-	vim.keymap.set("n", "<Leader>xlt", function()
-		trouble.toggle("lsp_type_definitions")
-	end, kopts("trouble :: toggle (lsp type definitions)"))
+	local function toggle_trouble(mode, opts)
+		local desc = {
+			mode = mode,
+			focus = false,
+			win = {
+				position = "left",
+			},
+		}
+		if opts ~= nil then
+			for k, v in pairs(opts) do
+				desc[k] = v
+			end
+		end
+		return function()
+			trouble.toggle(desc)
+		end
+	end
+	vim.keymap.set(
+		"n",
+		"<Leader>xs",
+		toggle_trouble("lsp_document_symbols", {
+			focus = true,
+			-- win = {
+			-- 	type = "float",
+			-- 	relative = "editor",
+			-- 	border = "rounded",
+			-- 	-- position = { 0, -2 },
+			-- 	size = { width = 0.3, height = 0.3 },
+			-- },
+			-- keys = {
+			-- 	["<esc>"] = "close",
+			-- },
+		}),
+		kopts("toggle lsp symbols")
+	)
+	vim.keymap.set("n", "<Leader>xlr", toggle_trouble("lsp_references"), kopts("toggle lsp references"))
+	vim.keymap.set("n", "<Leader>xld", toggle_trouble("lsp_definitions"), kopts("toggle lsp definitions"))
+	vim.keymap.set("n", "<Leader>xlt", toggle_trouble("lsp_type_definitions"), kopts("toggle lsp type definitions"))
+	vim.keymap.set("n", "<Leader>xll", toggle_trouble("lsp"), kopts("toggle LSP definitions, references, etc."))
 
 	-- -- dap
 	local dap = require("dap")
@@ -326,14 +356,29 @@ return {
 	},
 	{
 		"slint-ui/vim-slint",
+		enabled = false,
 	},
 	{
 		"dgagn/diagflow.nvim",
-		enabled = false,
+		enabled = true,
 		event = { "LspAttach" },
 		opts = {
+			scope = "line",
 			show_borders = true,
 			show_sign = false,
+		},
+	},
+	{
+		"RaafatTurki/corn.nvim",
+		enabled = false,
+		init = function()
+			vim.diagnostic.config({ virtual_text = false })
+		end,
+		opts = {
+			border_style = "double",
+			on_toggle = function(is_hidden)
+				vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text })
+			end,
 		},
 	},
 	{
@@ -345,7 +390,7 @@ return {
 		},
 		opts = {
 			["lua_ls"] = {},
-			["tailwindcss"] = {},
+			-- ["tailwindcss"] = {},
 			["taplo"] = {},
 			["jsonls"] = {},
 			["slint_lsp"] = {},
