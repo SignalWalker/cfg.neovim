@@ -7,7 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim = {
-      url = "github:neovim/neovim?dir=contrib";
+      url = "github:neovim/neovim?dir=contrib&ref=nightly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,5 +22,6 @@
       formatter = std.mapAttrs (system: pkgs: pkgs.default) inputs.alejandra.packages;
       homeManagerModules.default = import ./home-manager.nix inputs;
       nixosModules.default = import ./nixos-module.nix;
+      overlays.default = inputs.neovim.overlay;
     };
 }

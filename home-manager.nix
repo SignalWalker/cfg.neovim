@@ -12,7 +12,11 @@ in {
   options = with lib; {
     programs.ashvim = {
       enable = mkEnableOption "Ash Walker's Neovim configuration";
-      package = mkPackageOption pkgs "neovim-unwrapped" {};
+      package = mkOption {
+        type = types.package;
+        default = inputs.neovim.packages.${pkgs.system}.neovim or pkgs.neovim-unwrapped;
+      };
+      # package = mkPackageOption pkgs "neovim-unwrapped" {};
       configPath = mkOption {
         type = types.nullOr types.str;
         default = null;
@@ -53,7 +57,7 @@ in {
         vimAlias = true;
         vimdiffAlias = true;
         defaultEditor = true;
-        package = inputs.neovim.packages.${pkgs.system}.neovim;
+        package = ash.package;
         extraPackages = with pkgs; [
           universal-ctags
           tree-sitter
