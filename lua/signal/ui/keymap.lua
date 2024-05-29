@@ -5,21 +5,19 @@
 
 vim.opt.tildeop = true
 
-vim.keymap.set("n", "<D-t>", "<cmd>tabnew<cr>", { desc = "open new tab", silent = true })
-vim.keymap.set("n", "<D-h>", "<cmd>tabprevious<cr>", { desc = "move cursor to previous tab", silent = true })
-vim.keymap.set("n", "<D-l>", "<cmd>tabnext<cr>", { desc = "move cursor to next tab", silent = true })
+vim.keymap.set("n", "<D-t>", "<cmd>tabnew<cr>", { desc = "Open new tab", silent = true })
+vim.keymap.set("n", "<D-h>", "<cmd>tabprevious<cr>", { desc = "Switch to previous tab", silent = true })
+vim.keymap.set("n", "<D-l>", "<cmd>tabnext<cr>", { desc = "Switch to next tab", silent = true })
 
-vim.keymap.set("n", "<C-w>t", "<cmd>tabnew<cr>", { desc = "open new tab", silent = true })
-vim.keymap.set("n", "<C-M-h>", "<cmd>tabprevious<cr>", { desc = "switch to previous tab", silent = true })
-vim.keymap.set("n", "<C-M-l>", "<cmd>tabnext<cr>", { desc = "switch to next tab", silent = true })
+vim.keymap.set("n", "<C-w>t", "<cmd>tabnew<cr>", { desc = "Open new tab", silent = true })
+vim.keymap.set("n", "<C-M-h>", "<cmd>tabprevious<cr>", { desc = "Switch to previous tab", silent = true })
+vim.keymap.set("n", "<C-M-l>", "<cmd>tabnext<cr>", { desc = "Switch to next tab", silent = true })
 
-vim.keymap.set("n", "<Leader><C-x>", "<cmd>bdelete<cr>", { desc = "wipe buffer" })
-
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-
-vim.keymap.set("n", "<Leader>df", function()
-	vim.diagnostic.open_float()
-end, { desc = "open floating diagnostics window" })
+vim.keymap.set(
+	"n",
+	"<C-w><C-q>",
+	"<cmd>bdelete<cr>",
+	{ desc = "Unload buffer and delete it from bufferlist", silent = true }
+)
 
 -- extra keymaps set in plugin init & ftplugin files

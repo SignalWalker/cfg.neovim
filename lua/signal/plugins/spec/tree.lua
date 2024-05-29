@@ -60,6 +60,7 @@ return {
 	},
 	{
 		"stevearc/oil.nvim",
+		lazy = false,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
@@ -83,6 +84,7 @@ return {
 			default_file_explorer = true,
 			experimental_watch_for_changes = true,
 			delete_to_trash = true,
+			skip_confirm_for_simple_edits = true,
 			lsp_file_methods = {
 				autosave_changes = true,
 			},
@@ -92,7 +94,7 @@ return {
 				"size",
 				{ "mtime", format = "%Y-%m-%d %H:%M" },
 			},
-			constrain_cursor = "name",
+			constrain_cursor = "editable",
 			view_options = {
 				natural_order = false,
 				sort = {
