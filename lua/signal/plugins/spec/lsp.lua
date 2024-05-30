@@ -237,9 +237,9 @@ return {
 									glob = false,
 								},
 							},
-							check = {
-								command = "clippy",
-							},
+							-- check = {
+							-- 	command = "clippy",
+							-- },
 							diagnostics = {
 								experimental = {
 									enable = true,
