@@ -2,12 +2,12 @@ local function toggle_trouble(mode, opts)
 	local desc = {
 		mode = mode,
 		focus = false,
-		preview = {
-			type = "split",
-			relative = "win",
-			position = "right",
-			size = 0.3,
-		},
+		-- preview = {
+		-- 	type = "split",
+		-- 	relative = "win",
+		-- 	position = "right",
+		-- 	size = 0.3,
+		-- },
 	}
 	if opts ~= nil then
 		for k, v in pairs(opts) do
@@ -22,7 +22,7 @@ end
 return {
 	{
 		"folke/trouble.nvim",
-		branch = "dev",
+		branch = "main",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		cmd = {
 			"Trouble",
@@ -39,6 +39,17 @@ return {
 			{ "<Leader>xs", toggle_trouble("symbols", { preview = { type = "main" } }), desc = "toggle symbols" },
 		},
 		opts = {
+			preview = {
+				type = "float",
+				relative = "editor",
+				border = "rounded",
+				title = "Preview",
+				title_pos = "center",
+				position = { 0, -2 },
+				size = { width = 0.3, height = 0.3 },
+				zindex = 200,
+				scratch = true,
+			},
 			modes = {
 				cascade = {
 					mode = "diagnostics",
