@@ -70,13 +70,42 @@ return {
 		"folke/todo-comments.nvim",
 		event = { "LspAttach" },
 		dependencies = { "nvim-lua/plenary.nvim" },
+		cmd = {
+			"TodoQuickFix",
+			"TodoLocList",
+			"TodoTelescope",
+		},
 		keys = {
-			{ "<Leader>xt", "<cmd>TodoTrouble<cr>", desc = "toggle todo list" },
+			{ "<Leader>xt", "<cmd>Trouble todo<cr>", desc = "toggle todo list" },
 			{ "<Leader>fpt", "<cmd>TodoTelescope<cr>", desc = "view todo list in telescope" },
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "Next todo",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "Previous todo",
+			},
 		},
 		opts = {
 			keywords = {
-				TODO = { alt = { "todo!", "unimplemented!" } },
+				FIX = { icon = "" },
+				TODO = { icon = "", alt = { "todo", "unimplemented" } },
+				HACK = { icon = "" },
+				WARN = { icon = "" },
+				PERF = { icon = "" },
+				NOTE = { icon = "" },
+				IDEA = {
+					icon = "",
+					color = "info",
+				},
+				TEST = { icon = "⏲" },
 			},
 			highlight = {
 				pattern = {
@@ -86,7 +115,7 @@ return {
 				comments_only = false,
 			},
 			search = {
-				pattern = [[\b(KEYWORDS)(:|!\()]],
+				pattern = [[\b(KEYWORDS)\s*(:|!\()]],
 			},
 		},
 	},
