@@ -10,6 +10,46 @@
 
 return {
 	{
+		"jvgrootveld/telescope-zoxide",
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+		keys = {
+			{
+				"<Leader>ffz",
+				function()
+					require("telescope").extensions.zoxide.list({})
+				end,
+				desc = "Find directory (zoxide)",
+			},
+		},
+		opts = function()
+			local zx = require("telescope._extensions.zoxide.utils")
+			return {
+				mappings = {
+					default = {
+						action = function(selection)
+							vim.cmd.tcd(selection.path)
+							vim.cmd.edit(selection.path)
+						end,
+						after_action = function(selection)
+							vim.notify(
+								selection.path,
+								vim.log.levels.INFO,
+								{ title = "Zoxide", hide_from_history = true }
+							)
+						end,
+					},
+				},
+			}
+		end,
+		config = function(_, opts)
+			local ts = require("telescope")
+			ts.setup({ extensions = { ["zoxide"] = opts } })
+			ts.load_extension("zoxide")
+		end,
+	},
+	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		-- enabled = false,
 		dependencies = {

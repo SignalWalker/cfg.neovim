@@ -1,3 +1,6 @@
+local notes_dir = vim.env.XDG_NOTES_DIR or (vim.env.HOME .. "/notes")
+local notes_pattern = notes_dir .. "/**.md"
+
 return {
 	{
 		"ellisonleao/glow.nvim",
@@ -10,6 +13,7 @@ return {
 	{
 		"epwalsh/obsidian.nvim",
 		version = "^3",
+		lazy = not vim.g.__force_obsidian,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
@@ -18,8 +22,8 @@ return {
 			-- "ms-jpq/coq_nvim",
 		},
 		event = {
-			"BufReadPre /home/ash/notes/**.md",
-			"BufNewFile /home/ash/notes/**.md",
+			"BufReadPre " .. notes_pattern,
+			"BufNewFile " .. notes_pattern,
 		},
 		cmd = {
 			"ObsidianYesterday",
@@ -29,18 +33,24 @@ return {
 			workspaces = {
 				{
 					name = "Notes",
-					path = "~/notes",
+					path = notes_dir,
 				},
 			},
 			daily_notes = {
 				folder = "daily",
 				date_format = "%Y-%m-%d",
+				alias_format = nil,
 				template = "daily.md",
 			},
 			templates = {
 				subdir = "template",
 				date_format = "%Y-%m-%d",
 				time_format = "%H:%M",
+				substitutions = {
+					["date:MMMM D, YYYY"] = function()
+						return os.date("%B %d, %y")
+					end,
+				},
 			},
 			completion = {
 				nvim_cmp = true,
@@ -56,14 +66,25 @@ return {
 			attachments = {
 				img_folder = "data/img",
 			},
-		},
-		init = function()
-			vim.api.nvim_create_autocmd({ "BufReadPre" }, {
-				group = vim.api.nvim_create_augroup("obsidian_setup_extra", { clear = true }),
-				pattern = "/home/ash/notes/**.md",
-				callback = function(args)
+			follow_url_func = function(url)
+				vim.fn.jobstart({ "xdg-open", url })
+				vim.notify("Opened " .. url .. " in external program", vim.log.levels.INFO, { title = "Obsidian" })
+			end,
+			callbacks = {
+				post_set_workspace = function(client, workspace)
+					vim.notify(
+						"Entered workspace: " .. workspace.path.filename,
+						vim.log.levels.INFO,
+						{ title = "Obsidian" }
+					)
+				end,
+				enter_note = function(_client, note)
 					vim.wo.conceallevel = 2
-					local bufnr = args["buf"]
+					local bufnr = note.bufnr
+					if bufnr == nil then
+						vim.notify("enter_note called without bufnr", vim.log.levels.WARN, { title = "Obsidian" })
+						return
+					end
 					local kopts_base = { noremap = true, silent = true, buffer = bufnr }
 					local kopts = function(desc)
 						if desc == nil then
@@ -109,7 +130,7 @@ return {
 						kopts("Obsidian :: Link to new note")
 					)
 				end,
-			})
-		end,
+			},
+		},
 	},
 }

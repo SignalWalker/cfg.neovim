@@ -74,13 +74,13 @@ return {
 	},
 	{
 		"m4xshen/hardtime.nvim",
-		enabled = false,
+		enabled = true,
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"nvim-lua/plenary.nvim",
 		},
 		opts = {
-			showmode = false,
+			allow_different_key = true,
 		},
 	},
 	{
@@ -142,4 +142,45 @@ return {
 	-- 	priority = 1001,
 	-- 	opts = {},
 	-- }
+	{
+		"folke/zen-mode.nvim",
+		keys = {
+			{
+				"<Leader>bz",
+				function()
+					require("zen-mode").toggle()
+				end,
+				desc = "Toggle zen mode",
+			},
+		},
+		opts = {
+			plugins = {
+				kitty = {
+					enabled = true,
+					font = "+4",
+				},
+			},
+			-- on_open = function(_win)
+			-- 	vim.cmd.TWEnable()
+			-- end,
+			-- on_close = function()
+			-- 	vim.cmd.TWDisable()
+			-- end,
+		},
+	},
+	-- {
+	-- 	"joshuadanpeterson/typewriter.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 	},
+	-- 	cmd = {
+	-- 		"TWEnable",
+	-- 		"TWDisable",
+	-- 		"TWToggle",
+	-- 		"TWCenter",
+	-- 	},
+	-- 	opts = {
+	-- 		enable_with_zen_mode = true,
+	-- 	},
+	-- },
 }

@@ -186,6 +186,16 @@ return {
 		end,
 	},
 	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		opts = {},
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
+	},
+	{
 		"nvim-pack/nvim-spectre",
 		dependencies = {
 			"nvim-lua/plenary.nvim",

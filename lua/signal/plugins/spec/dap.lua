@@ -50,4 +50,12 @@ return {
 			end
 		end,
 	},
+	{
+		"theHamsta/nvim-dap-virtual-text",
+		event = "LspAttach",
+		dependencies = {
+			"mfussenegger/nvim-dap",
+		},
+		opts = {},
+	},
 }
