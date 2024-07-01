@@ -41,6 +41,7 @@ return {
 				date_format = "%Y-%m-%d",
 				alias_format = nil,
 				template = "daily.md",
+				default_tags = {},
 			},
 			templates = {
 				subdir = "template",
