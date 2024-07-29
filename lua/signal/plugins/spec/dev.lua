@@ -125,18 +125,9 @@ return {
 	},
 	{
 		"direnv/direnv.vim",
-		init = function()
-			vim.g.direnv_silent_load = 1
-		end,
-		config = function(_, _)
-			-- vim.api.nvim_create_autocmd({ "User" }, {
-			-- 	group = vim.api.nvim_create_augroup("NotifyDirenv", { clear = true }),
-			-- 	pattern = "DirenvLoaded",
-			-- 	callback = function(args)
-			-- 		print("Direnv loaded for " .. vim.loop.cwd())
-			-- 	end,
-			-- })
-		end,
+		-- lazy = true,
+		-- event = { "VeryLazy" },
+		-- opts = {},
 	},
 	{
 		"numToStr/Comment.nvim",
@@ -234,5 +225,11 @@ return {
 				},
 			},
 		},
+	},
+	{
+		"Olical/conjure",
+		dependencies = { "PaterJason/cmp-conjure" },
+		lazy = true,
+		ft = { "clojure", "fennel", "guile" },
 	},
 }

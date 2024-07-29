@@ -51,9 +51,9 @@ return {
 			dashboard.opts.leader = ";"
 			dashboard.section.buttons.val = {
 				-- stylua: ignore
-				dashboard.button('s', "勒> Restore Session", function() require('persistence').load() end),
-				dashboard.button("l", "鈴> Lazy", "<cmd>Lazy<CR>"),
-				dashboard.button("n", "N > Edit Neovim Config", function()
+				dashboard.button('s', " > Restore Session", function() require('persistence').load() end),
+				dashboard.button("l", " > Lazy", "<cmd>Lazy<CR>"),
+				dashboard.button("n", " > Edit Neovim Config", function()
 					local cfg_dir = vim.env.XDG_CONFIG_HOME .. "/nvim"
 					vim.cmd.tcd(cfg_dir)
 					vim.cmd.edit(cfg_dir .. "/init.lua")

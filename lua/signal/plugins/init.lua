@@ -34,5 +34,16 @@ return lazy.setup("signal.plugins.spec", {
 	},
 	checker = {
 		enabled = true,
+		check_pinned = true,
+	},
+	ui = {
+		title = "Lazy",
+		border = "single",
+	},
+	dev = {
+		path = "~/projects/cfg/plugins/neovim",
+		patterns = {
+			-- "direnv",
+		},
 	},
 })

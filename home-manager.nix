@@ -59,6 +59,9 @@ in {
         defaultEditor = true;
         package = ash.package;
         extraPackages = with pkgs; [
+          luarocks # lazy-rocks
+          lua # lazy-rocks
+
           universal-ctags
           tree-sitter
           glow # markdown previews

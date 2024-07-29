@@ -206,6 +206,7 @@ return {
 	{
 		"mrcjkb/rustaceanvim",
 		version = "^4",
+		lazy = false, -- handles laziness itself, apparently
 		ft = { "rust" },
 		init = function()
 			-- local uv = vim.loop
@@ -382,6 +383,9 @@ return {
 		},
 	},
 	{
+		"https://gitlab.com/HiPhish/guile.vim",
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"folke/neodev.nvim",
@@ -394,6 +398,7 @@ return {
 			["taplo"] = {},
 			["jsonls"] = {},
 			["slint_lsp"] = {},
+			["guile_ls"] = {},
 		},
 		config = function(_, opts)
 			local lsp = require("lspconfig")

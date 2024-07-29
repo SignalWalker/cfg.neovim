@@ -100,6 +100,7 @@ return {
 	},
 	{
 		"rcarriga/nvim-notify",
+		lazy = false,
 		opts = {
 			timeout = 2500,
 		},

@@ -36,7 +36,7 @@ return {
 							vim.notify(
 								selection.path,
 								vim.log.levels.INFO,
-								{ title = "Zoxide", hide_from_history = true }
+								{ title = "Zoxide", icon = "", hide_from_history = true }
 							)
 						end,
 					},

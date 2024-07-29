@@ -69,14 +69,18 @@ return {
 			},
 			follow_url_func = function(url)
 				vim.fn.jobstart({ "xdg-open", url })
-				vim.notify("Opened " .. url .. " in external program", vim.log.levels.INFO, { title = "Obsidian" })
+				vim.notify(
+					"Opened " .. url .. " in external program",
+					vim.log.levels.INFO,
+					{ title = "Obsidian", icon = "" }
+				)
 			end,
 			callbacks = {
 				post_set_workspace = function(client, workspace)
 					vim.notify(
 						"Entered workspace: " .. workspace.path.filename,
 						vim.log.levels.INFO,
-						{ title = "Obsidian" }
+						{ title = "Obsidian", icon = "" }
 					)
 				end,
 				enter_note = function(_client, note)

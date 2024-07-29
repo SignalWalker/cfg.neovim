@@ -18,7 +18,7 @@ return {
 	},
 	{
 		"NeogitOrg/neogit",
-		branch = "nightly", -- because we're using nvim v0.10
+		-- branch = "nightly", -- because we're using nvim v0.10
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"sindrets/diffview.nvim",
