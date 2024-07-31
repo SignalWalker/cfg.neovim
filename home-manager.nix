@@ -14,7 +14,9 @@ in {
       enable = mkEnableOption "Ash Walker's Neovim configuration";
       package = mkOption {
         type = types.package;
-        default = inputs.neovim.packages.${pkgs.system}.neovim or pkgs.neovim-unwrapped;
+        # FIX :: restore neovim nightly (build error as of 2024-07-29)
+        # default = inputs.neovim.packages.${pkgs.system}.neovim or pkgs.neovim-unwrapped;
+        default = pkgs.neovim-unwrapped;
       };
       # package = mkPackageOption pkgs "neovim-unwrapped" {};
       configPath = mkOption {
