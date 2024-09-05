@@ -399,6 +399,18 @@ return {
 			["jsonls"] = {},
 			["slint_lsp"] = {},
 			["guile_ls"] = {},
+			["clangd"] = {
+				cmd = {
+					"clangd",
+					"--background-index",
+					"--clang-tidy",
+					"--header-insertion=iwyu",
+					"--header-insertion-decorators",
+				},
+				init_options = {
+					fallback_flags = {},
+				},
+			},
 		},
 		config = function(_, opts)
 			local lsp = require("lspconfig")
