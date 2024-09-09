@@ -205,7 +205,7 @@ return {
 	},
 	{
 		"mrcjkb/rustaceanvim",
-		version = "^4",
+		version = "^5",
 		lazy = false, -- handles laziness itself, apparently
 		ft = { "rust" },
 		init = function()
@@ -316,30 +316,25 @@ return {
 		end,
 	},
 	{
-		"folke/neodev.nvim", -- automatic configuration for editing neovim config
-		lazy = false,
+		"folke/neoconf.nvim",
 		opts = {
-			library = {
-				enabled = true,
-				plugins = true,
-				types = true,
-				runtime = true,
+			import = {
+				vscode = false,
+				coc = false,
+				nlsp = false,
 			},
-			override = function(root_dir, library)
-				if root_dir:find("/etc/nixos", 1, true) == 1 then
-					library.enabled = true
-					library.plugins = true
-				elseif root_dir:find("nvim", 1, true) or root_dir:find("neovim", 1, true) then
-					library.enabled = true
-					library.plugins = true
-					library.types = true
-					library.runtime = true
-				end
-			end,
-			lspconfig = true,
-			pathStrict = false,
 		},
 	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+	{ "Bilal2453/luvit-meta", lazy = true },
 	{
 		"smjonas/inc-rename.nvim",
 		event = { "LspAttach" },
@@ -388,7 +383,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"folke/neodev.nvim",
+			"neoconf.nvim",
 			"hrsh7th/nvim-cmp",
 			-- "ms-jpq/coq_nvim",
 		},
