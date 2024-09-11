@@ -65,25 +65,33 @@ in {
           lua # lazy-rocks
 
           universal-ctags
+
           tree-sitter
+
           glow # markdown previews
           fzf
 
           cmake # telescope-fzf-native
           gnumake # telescope-fzf-native
 
-          lua-language-server
           imagemagick # 3rd/image.nvim
           delta # debugloop/telescope-undo.nvim
           graphviz # rustaceanvim
-          stylua # lua formatting
           taplo # toml formatting / language server
           vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
+
           nixd # nix language server
+
           tailwindcss-language-server # css language server
+
           vscode-langservers-extracted # json, among other things
 
           trash-cli # nvim-tree trash
+
+          cmake-language-server
+
+          lua-language-server
+          stylua # lua formatting
 
           # slint-lsp
         ];
