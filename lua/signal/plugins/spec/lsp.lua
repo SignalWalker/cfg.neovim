@@ -406,6 +406,7 @@ return {
 					fallback_flags = {},
 				},
 			},
+			["cssls"] = {},
 		},
 		config = function(_, opts)
 			local lsp = require("lspconfig")
