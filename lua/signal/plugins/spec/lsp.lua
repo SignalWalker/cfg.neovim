@@ -407,6 +407,8 @@ return {
 				},
 			},
 			["cssls"] = {},
+			["eslint"] = {},
+			["ts_ls"] = {},
 		},
 		config = function(_, opts)
 			local lsp = require("lspconfig")

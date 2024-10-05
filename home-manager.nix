@@ -93,6 +93,9 @@ in {
           lua-language-server
           stylua # lua formatting
 
+          eslint
+          typescript-language-server
+
           # slint-lsp
         ];
         # python
