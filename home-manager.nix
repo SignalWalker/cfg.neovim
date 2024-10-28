@@ -73,6 +73,7 @@ in {
 
           cmake # telescope-fzf-native
           gnumake # telescope-fzf-native
+          clang
 
           imagemagick # 3rd/image.nvim
           delta # debugloop/telescope-undo.nvim
