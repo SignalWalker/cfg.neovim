@@ -14,7 +14,7 @@ local set_lsp_keymaps = function(_, bufnr)
 	end
 
 	vim.keymap.set("n", "]D", vim.lsp.buf.declaration, kopts("lsp :: goto declaration"))
-	vim.keymap.set("n", "]d", vim.lsp.buf.definition, kopts("lsp :: goto definition"))
+	-- vim.keymap.set("n", "]d", vim.lsp.buf.definition, kopts("lsp :: goto definition"))
 	vim.keymap.set("n", "<Leader>li", vim.lsp.buf.implementation, kopts("lsp :: goto implementation"))
 	vim.keymap.set("n", "<Leader>lr", vim.lsp.buf.references, kopts("lsp :: references"))
 	vim.keymap.set("n", "<Leader>ls", vim.lsp.buf.signature_help, kopts("lsp :: signature help"))
