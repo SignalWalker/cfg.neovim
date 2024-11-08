@@ -15,4 +15,20 @@ return {
 		cmd = { "Playtime" },
 		opts = {},
 	},
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		opts = {},
+		init = function()
+			local Snacks = require("snacks")
+			_G.dd = function(...)
+				Snacks.debug.inspect(...)
+			end
+			_G.bt = function()
+				Snacks.debug.backtrace()
+			end
+			vim.print = _G.dd
+		end,
+	},
 }
