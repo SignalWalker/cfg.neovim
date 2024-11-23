@@ -81,7 +81,8 @@ in {
           taplo # toml formatting / language server
           vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
 
-          nixd # nix language server
+          # FIX :: disabled 2024-11-19 for build failure
+          # nixd # nix language server
 
           tailwindcss-language-server # css language server
 
