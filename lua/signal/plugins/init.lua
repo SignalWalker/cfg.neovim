@@ -29,6 +29,10 @@ end
 local _, lazy = ensure_lazy()
 
 return lazy.setup("signal.plugins.spec", {
+	lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
+	rocks = {
+		hererocks = false,
+	},
 	diff = {
 		cmd = "diffview.nvim",
 	},

@@ -62,7 +62,7 @@ in {
         package = ash.package;
         extraPackages = with pkgs; [
           luarocks # lazy-rocks
-          lua # lazy-rocks
+          lua5_1 # lazy-rocks
 
           universal-ctags
 
