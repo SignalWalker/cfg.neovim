@@ -82,7 +82,7 @@ in {
           vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
 
           # FIX :: disabled 2024-11-19 for build failure
-          # nixd # nix language server
+          nixd # nix language server
 
           tailwindcss-language-server # css language server
 

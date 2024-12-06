@@ -169,7 +169,7 @@ return {
 		-- tag = "stable",
 		event = { "BufRead Cargo.toml" },
 		opts = {
-			src = {
+			completion = {
 				cmp = {
 					enabled = true,
 				},
