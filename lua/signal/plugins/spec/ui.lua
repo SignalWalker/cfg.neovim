@@ -72,17 +72,17 @@ return {
 			},
 		},
 	},
-	{
-		"m4xshen/hardtime.nvim",
-		enabled = true,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-		},
-		opts = {
-			allow_different_key = true,
-		},
-	},
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	enabled = false,
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 	},
+	-- 	opts = {
+	-- 		allow_different_key = true,
+	-- 	},
+	-- },
 	{
 		"sindrets/winshift.nvim",
 		enabled = false,
