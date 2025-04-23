@@ -6,9 +6,49 @@ end
 
 return {
 	{
-		"L3MON4D3/LuaSnip",
-		version = "v2.*",
+		"saghen/blink.cmp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		build = "cargo build --release",
+		opts = {
+			keymap = { preset = "super-tab" },
+			completion = {
+				menu = { border = "single" },
+				documentation = { window = { border = "single" } },
+			},
+			signature = {
+				enabled = true,
+				trigger = {
+					enabled = true,
+				},
+				window = {
+					show_documentation = true,
+					border = "single",
+				},
+			},
+			-- fuzzy = {
+			-- 	sorts = {
+			-- 		"exact",
+			-- 		"score",
+			-- 		"sort_text",
+			-- 	},
+			-- },
+			sources = {
+				providers = {
+					path = {
+						opts = {
+							get_cwd = function()
+								return vim.fn.getcwd()
+							end,
+						},
+					},
+				},
+			},
+		},
 	},
+	-- {
+	-- 	"L3MON4D3/LuaSnip",
+	-- 	version = "v2.*",
+	-- },
 	{
 		"ms-jpq/coq.artifacts",
 		enabled = false,
@@ -50,7 +90,7 @@ return {
 	},
 	{
 		"hrsh7th/nvim-cmp",
-		-- enabled = false,
+		enabled = false,
 		dependencies = {
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/cmp-nvim-lsp",
@@ -149,6 +189,7 @@ return {
 	},
 	{
 		"PaterJason/cmp-conjure",
+		enabled = false,
 		dependencies = { "hrsh7th/nvim-cmp" },
 		lazy = true,
 		config = function()

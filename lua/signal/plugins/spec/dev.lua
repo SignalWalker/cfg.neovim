@@ -38,6 +38,26 @@ return {
 			{ "<Leader>xL", toggle_trouble("loclist"), desc = "toggle loclist" },
 			{ "<Leader>xs", toggle_trouble("symbols", { preview = { type = "main" } }), desc = "toggle symbols" },
 		},
+		specs = {
+			"folke/snacks.nvim",
+			opts = function(_, opts)
+				return vim.tbl_deep_extend("force", opts or {}, {
+					picker = {
+						actions = require("trouble.sources.snacks").actions,
+						win = {
+							input = {
+								keys = {
+									["<c-t>"] = {
+										"trouble_open",
+										mode = { "n", "i" },
+									},
+								},
+							},
+						},
+					},
+				})
+			end,
+		},
 		opts = {
 			preview = {
 				type = "float",
@@ -70,27 +90,34 @@ return {
 		"folke/todo-comments.nvim",
 		event = { "LspAttach" },
 		dependencies = { "nvim-lua/plenary.nvim" },
-		cmd = {
-			"TodoQuickFix",
-			"TodoLocList",
-			"TodoTelescope",
-		},
 		keys = {
-			{ "<Leader>xt", "<cmd>Trouble todo<cr>", desc = "toggle todo list" },
-			{ "<Leader>fpt", "<cmd>TodoTelescope<cr>", desc = "view todo list in telescope" },
 			{
-				"]t",
+				"<Leader>ftc",
+				function()
+					Snacks.picker.todo_comments()
+				end,
+				desc = "find any note comment",
+			},
+			{
+				"<Leader>ftt",
+				function()
+					Snacks.picker.todo_comments({ keywords = { "FIX", "TODO" } })
+				end,
+				desc = "find todo comments",
+			},
+			{
+				"]o",
 				function()
 					require("todo-comments").jump_next()
 				end,
-				desc = "Next todo",
+				desc = "next todo",
 			},
 			{
-				"[t",
+				"[o",
 				function()
 					require("todo-comments").jump_prev()
 				end,
-				desc = "Previous todo",
+				desc = "previous todo",
 			},
 		},
 		opts = {
@@ -130,17 +157,6 @@ return {
 		-- opts = {},
 	},
 	{
-		"numToStr/Comment.nvim",
-		enabled = false, -- superseded by built in functionality in neovim v0.10
-		lazy = false,
-		opts = {
-			mappings = {
-				basic = true,
-				extra = false,
-			},
-		},
-	},
-	{
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
@@ -150,14 +166,18 @@ return {
 				function()
 					require("conform").format({ async = false, lsp_fallback = true })
 				end,
-				desc = "buffer :: format",
+				desc = "format buffer",
 			},
 		},
 		opts = {
+			default_format_opts = {
+				lsp_format = "fallback",
+			},
 			formatters_by_ft = {
-				nix = { "alejandra" },
+				nix = { "nixfmt", lsp_format = "fallback" },
+				css = { "stylelint" },
 				lua = { "stylua" },
-				rust = {}, -- fallback to lsp
+				rust = { "rustfmt", lsp_format = "fallback" },
 				toml = { "taplo" },
 				["_"] = { "trim_whitespace" },
 			},

@@ -1,13 +1,11 @@
-inputs @ {self, ...}: {
+{self, ...}: {
   config,
   pkgs,
   lib,
   ...
 }:
 with builtins; let
-  std = pkgs.lib;
   ash = config.programs.ashvim;
-  nvim = config.programs.neovim;
 in {
   options = with lib; {
     programs.ashvim = {
@@ -81,7 +79,6 @@ in {
           taplo # toml formatting / language server
           vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
 
-          # FIX :: disabled 2024-11-19 for build failure
           nixd # nix language server
 
           tailwindcss-language-server # css language server
@@ -98,7 +95,12 @@ in {
           eslint
           typescript-language-server
 
-          # slint-lsp
+          # snacks.nvim
+          sqlite # picker
+
+          nixfmt-rfc-style
+
+          stylelint
         ];
         # python
         withPython3 = true;
@@ -118,25 +120,35 @@ in {
         # map kitty_mod+alt+/ kitty_scrollback_nvim --config ksb_builtin_last_cmd_output
 
         ## smart-splits.nvim
-        map alt+h kitten pass_keys.py neighboring_window left   alt+h
-        map alt+j kitten pass_keys.py neighboring_window bottom alt+j
-        map alt+k kitten pass_keys.py neighboring_window top    alt+k
-        map alt+l kitten pass_keys.py neighboring_window right  alt+l
+        map alt+h neighboring_window left
+        map alt+j neighboring_window down
+        map alt+k neighboring_window up
+        map alt+l neighboring_window right
 
-        map kitty_mod+h kitten pass_keys.py neighboring_window left   alt+h
-        map kitty_mod+j kitten pass_keys.py neighboring_window bottom alt+j
-        map kitty_mod+k kitten pass_keys.py neighboring_window top    alt+k
-        map kitty_mod+l kitten pass_keys.py neighboring_window right  alt+l
+        map --when-focus-on var:IS_NVIM alt+h
+        map --when-focus-on var:IS_NVIM alt+j
+        map --when-focus-on var:IS_NVIM alt+k
+        map --when-focus-on var:IS_NVIM alt+l
 
-        map ctrl+h kitten pass_keys.py relative_resize left  3 ctrl+h
-        map ctrl+j kitten pass_keys.py relative_resize down  3 ctrl+j
-        map ctrl+k kitten pass_keys.py relative_resize up    3 ctrl+k
-        map ctrl+l kitten pass_keys.py relative_resize right 3 ctrl+l
+        map kitty_mod+h neighboring_window left
+        map kitty_mod+j neighboring_window down
+        map kitty_mod+k neighboring_window up
+        map kitty_mod+l neighboring_window right
 
-        map kitty_mod+alt+shift+h kitten pass_keys.py relative_resize left  3 ctrl+h
-        map kitty_mod+alt+shift+j kitten pass_keys.py relative_resize down  3 ctrl+j
-        map kitty_mod+alt+shift+k kitten pass_keys.py relative_resize up    3 ctrl+k
-        map kitty_mod+alt+shift+l kitten pass_keys.py relative_resize right 3 ctrl+l
+        map ctrl+h kitten relative_resize.py left  3
+        map ctrl+j kitten relative_resize.py down  3
+        map ctrl+k kitten relative_resize.py up    3
+        map ctrl+l kitten relative_resize.py right 3
+
+        map --when-focus-on var:IS_NVIM ctrl+h
+        map --when-focus-on var:IS_NVIM ctrl+j
+        map --when-focus-on var:IS_NVIM ctrl+k
+        map --when-focus-on var:IS_NVIM ctrl+l
+
+        map kitty_mod+alt+shift+h kitten relative_resize.py left  3
+        map kitty_mod+alt+shift+j kitten relative_resize.py down  3
+        map kitty_mod+alt+shift+k kitten relative_resize.py up    3
+        map kitty_mod+alt+shift+l kitten relative_resize.py right 3
 
       '';
     }

@@ -48,20 +48,20 @@ return {
 		event = "VimEnter",
 		opts = {},
 	},
-	{
-		"stevearc/dressing.nvim",
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
-		},
-		opts = {
-			input = {
-				enabled = true,
-			},
-			select = {
-				enabled = true,
-			},
-		},
-	},
+	-- {
+	-- 	"stevearc/dressing.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-telescope/telescope.nvim",
+	-- 	},
+	-- 	opts = {
+	-- 		input = {
+	-- 			enabled = true,
+	-- 		},
+	-- 		select = {
+	-- 			enabled = true,
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"folke/noice.nvim",
 		dependencies = {

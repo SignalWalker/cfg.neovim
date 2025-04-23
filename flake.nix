@@ -7,11 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    ...
-  }:
+  outputs = inputs @ {nixpkgs, ...}:
     with builtins; let
       std = nixpkgs.lib;
     in {

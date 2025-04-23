@@ -18,7 +18,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"nvim-telescope/telescope.nvim",
-			"hrsh7th/nvim-cmp",
+			-- "hrsh7th/nvim-cmp",
 			-- "ms-jpq/coq_nvim",
 		},
 		event = {
@@ -54,7 +54,7 @@ return {
 				},
 			},
 			completion = {
-				nvim_cmp = true,
+				nvim_cmp = false,
 			},
 			mappings = {},
 			new_notes_location = "current_dir",

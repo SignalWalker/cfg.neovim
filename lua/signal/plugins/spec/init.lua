@@ -44,25 +44,32 @@ return {
 		},
 		keys = {
 			{
-				"<Leader>vsld",
+				"<Leader>vsl",
 				function()
 					require("persistence").load()
 				end,
-				desc = "session :: load (current directory)",
+				desc = "load session for current directory",
 			},
 			{
-				"<Leader>vsll",
+				"<Leader>vsL",
 				function()
 					require("persistence").load({ last = true })
 				end,
-				desc = "session :: load (last saved)",
+				desc = "load last saved session",
+			},
+			{
+				"<Leader>vss",
+				function()
+					require("persistence").select()
+				end,
+				desc = "select a session to load",
 			},
 			{
 				"<Leader>vsq",
 				function()
 					require("persistence").stop()
 				end,
-				desc = "session :: don't save on exit",
+				desc = "don't save this session on exit",
 			},
 		},
 	},
@@ -71,33 +78,33 @@ return {
 	-- 	opts = {
 	-- 	}
 	-- },
-	{
-		"ahmedkhalf/project.nvim",
-		lazy = false, -- otherwise, the projects file loads slow enough that entries don't appear in telescope
-		opts = {
-			scope_chdir = "tab",
-			manual_mode = true,
-			detection_methods = { "lsp", "pattern" },
-			patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-			silent_chdir = false,
-			exclude_dirs = { "/nix/store/*", "~/.local/share/cargo/*" },
-			-- datapath = vim.fn.stdpath("cache") .. "/projects/",
-		},
-		keys = {
-			{
-				"<Leader>ffp",
-				function()
-					require("telescope").extensions.projects.projects({})
-				end,
-				desc = "telescope :: projects",
-			},
-			{ "<Leader>vpp", "<cmd>ProjectRoot<cr>", desc = "cd to project root (scope: tab)" },
-		},
-		config = function(_, opts)
-			require("project_nvim").setup(opts)
-			require("telescope").load_extension("projects")
-		end,
-	},
+	-- {
+	-- 	"ahmedkhalf/project.nvim",
+	-- 	lazy = false, -- otherwise, the projects file loads slow enough that entries don't appear in telescope
+	-- 	opts = {
+	-- 		scope_chdir = "tab",
+	-- 		manual_mode = true,
+	-- 		detection_methods = { "lsp", "pattern" },
+	-- 		patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
+	-- 		silent_chdir = false,
+	-- 		exclude_dirs = { "/nix/store/*", "~/.local/share/cargo/*" },
+	-- 		-- datapath = vim.fn.stdpath("cache") .. "/projects/",
+	-- 	},
+	-- 	keys = {
+	-- 		-- {
+	-- 		-- 	"<Leader>ffp",
+	-- 		-- 	function()
+	-- 		-- 		require("telescope").extensions.projects.projects({})
+	-- 		-- 	end,
+	-- 		-- 	desc = "telescope :: projects",
+	-- 		-- },
+	-- 		{ "<Leader>vpp", "<cmd>ProjectRoot<cr>", desc = "cd to project root (scope: tab)" },
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("project_nvim").setup(opts)
+	-- 		require("telescope").load_extension("projects")
+	-- 	end,
+	-- },
 	{
 		"rcarriga/nvim-notify",
 		lazy = false,
@@ -126,10 +133,10 @@ return {
 			"rcarriga/nvim-notify",
 		},
 		keys = {
-			{ "<Leader>pw", "<cmd>TimerStart 25m Work<cr>", desc = "pomo :: start (work)" },
-			{ "<Leader>pb", "<cmd>TimerStart 5m Break<cr>", desc = "pomo :: start (break)" },
-			{ "<Leader>pp", "<cmd>TimerPause<cr>", desc = "pomo :: pause" },
-			{ "<Leader>pr", "<cmd>TimerResume<cr>", desc = "pomo :: resume" },
+			{ "<Leader>tw", "<cmd>TimerStart 25m Work<cr>", desc = "start pomodoro work timer" },
+			{ "<Leader>tb", "<cmd>TimerStart 5m Break<cr>", desc = "start pomodoro break timer" },
+			{ "<Leader>tp", "<cmd>TimerPause<cr>", desc = "pause pomodoro timer" },
+			{ "<Leader>tr", "<cmd>TimerResume<cr>", desc = "resume pomodoro timer" },
 		},
 		opts = {},
 	},

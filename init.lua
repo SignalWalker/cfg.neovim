@@ -5,6 +5,8 @@ vim.opt.timeoutlen = 500
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 
+math.randomseed()
+
 require("signal.meta")
 require("signal.plugins")
 require("signal.ui")
