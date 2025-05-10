@@ -388,6 +388,8 @@ return {
 			["cssls"] = {},
 			["eslint"] = {},
 			["ts_ls"] = {},
+			["gdscript"] = {},
+			["gdshader_lsp"] = {},
 		},
 		config = function(_, opts)
 			local lsp = require("lspconfig")
@@ -406,7 +408,8 @@ return {
 			for srv, cfg in pairs(opts) do
 				cfg.on_attach = set_lsp_keymaps(cfg.on_attach)
 				cfg.capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
-				lsp[srv].setup(cfg)
+				vim.lsp.config(srv, cfg)
+				vim.lsp.enable(srv)
 			end
 		end,
 	},
