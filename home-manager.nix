@@ -173,7 +173,7 @@ in
       (lib.mkIf (config ? signal.dev.editor.editors) {
         home.packages = with pkgs; [ httm ];
         signal.dev.editor.editors."neovim" = {
-          cmd.term = "ounce --trace nvim";
+          cmd.term = "nvim";
         };
       })
     ]
