@@ -390,6 +390,7 @@ return {
 			["ts_ls"] = {},
 			["gdscript"] = {},
 			["gdshader_lsp"] = {},
+			["csharp_ls"] = {},
 		},
 		config = function(_, opts)
 			local lsp = require("lspconfig")

@@ -179,6 +179,7 @@ return {
 				lua = { "stylua" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 				toml = { "taplo" },
+				c_sharp = { "csharpier", lsp_format = "fallback" },
 				["_"] = { "trim_whitespace" },
 			},
 			format_on_save = { timeout_ms = 500, lsp_fallback = true },

@@ -107,6 +107,9 @@ in
             nixfmt-rfc-style
 
             stylelint
+
+            csharp-ls
+            csharpier # C# formatter
           ];
           # python
           withPython3 = true;
