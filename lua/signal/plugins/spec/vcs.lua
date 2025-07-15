@@ -48,4 +48,10 @@ return {
 			trouble = true,
 		},
 	},
+	{
+		"avm99963/vim-jjdescription",
+	},
+	{
+		"rafikdraoui/jj-diffconflicts",
+	},
 }
