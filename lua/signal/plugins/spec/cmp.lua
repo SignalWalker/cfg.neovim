@@ -8,7 +8,7 @@ return {
 	{
 		"saghen/blink.cmp",
 		dependencies = { "rafamadriz/friendly-snippets" },
-		build = "cargo build --release",
+		build = "nix run .#build-plugin",
 		opts = {
 			keymap = { preset = "super-tab" },
 			completion = {
@@ -25,18 +25,11 @@ return {
 					border = "single",
 				},
 			},
-			-- fuzzy = {
-			-- 	sorts = {
-			-- 		"exact",
-			-- 		"score",
-			-- 		"sort_text",
-			-- 	},
-			-- },
 			sources = {
 				providers = {
 					path = {
 						opts = {
-							get_cwd = function()
+							get_cwd = function(_)
 								return vim.fn.getcwd()
 							end,
 						},

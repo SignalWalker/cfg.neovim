@@ -253,4 +253,11 @@ return {
 		lazy = true,
 		ft = { "clojure", "fennel", "guile" },
 	},
+	{
+		"NachoNievaG/atac.nvim",
+		dependencies = { "akinsho/toggleterm.nvim" },
+		opts = {
+			dir = "/tmp/atac",
+		},
+	},
 }

@@ -68,16 +68,22 @@ in
             luarocks # lazy-rocks
             lua5_1 # lazy-rocks
 
+            ripgrep # multi
+            fd # multi
+
             universal-ctags
 
             tree-sitter
+            nodejs_latest # treesitter
+            clang # treesitter, others
 
             glow # markdown previews
             fzf
 
+            cargo # blink.nvim
+
             cmake # telescope-fzf-native
             gnumake # telescope-fzf-native
-            clang
 
             imagemagick # 3rd/image.nvim
             delta # debugloop/telescope-undo.nvim
@@ -110,6 +116,13 @@ in
 
             csharp-ls
             csharpier # C# formatter
+
+            atac # REST API testing
+
+            tectonic # latex math rendering
+            mermaid-cli # mermaid diagram rendering
+
+            sqlite # snacks.picker frecency
           ];
           # python
           withPython3 = true;
