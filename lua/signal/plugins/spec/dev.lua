@@ -169,7 +169,10 @@ return {
 				desc = "format buffer",
 			},
 		},
+		---@module "conform"
+		---@type conform.setupOpts
 		opts = {
+			-- log_level = vim.log.levels.TRACE,
 			default_format_opts = {
 				lsp_format = "fallback",
 			},

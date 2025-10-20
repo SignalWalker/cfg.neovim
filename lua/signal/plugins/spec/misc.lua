@@ -15,6 +15,9 @@ return {
 		cmd = { "Playtime" },
 		opts = {},
 	},
+	{
+		"lbrayner/vim-rzip",
+	},
 	-- {
 	-- 	"bxrne/was.nvim",
 	-- 	dependencies = {
@@ -128,14 +131,29 @@ return {
 			vim.print = _G.dd
 		end,
 		keys = function(_, _)
+			local Snacks = require("snacks")
 			return {
 				-- PROJECTS
 				{
 					"<Leader>fpp",
 					function()
-						Snacks.picker.projects()
+						Snacks.picker.projects({
+							dev = {
+								"~/projects",
+								"~/projects-terra",
+								"~/projects-artemis",
+							},
+							patterns = { ".jj", ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json", "Makefile" },
+						})
 					end,
 					desc = "find projects",
+				},
+				{
+					"<Leader>fpz",
+					function()
+						Snacks.picker.zoxide()
+					end,
+					desc = "find projects (zoxide)",
 				},
 				-- GIT
 				{

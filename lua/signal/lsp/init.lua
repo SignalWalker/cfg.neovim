@@ -40,6 +40,9 @@ local lsp_cfgs = {
 	["gdscript"] = {},
 	["gdshader_lsp"] = {},
 	["csharp_ls"] = {},
+	["qmlls"] = {
+		cmd = { "qmlls", "-E" },
+	},
 	["nixd"] = {
 		settings = {
 			["nixd"] = {
@@ -80,6 +83,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				trouble.toggle(desc)
 			end
 		end
+
+		local Snacks = require("snacks")
 
 		-- TODO :: make these conditional on LSP method support
 		vim.keymap.set("n", "gd", function()

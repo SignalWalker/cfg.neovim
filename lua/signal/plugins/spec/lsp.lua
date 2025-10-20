@@ -32,7 +32,7 @@ return {
 				hover = true,
 			},
 			neoconf = {
-				enabled = true,
+				enabled = false,
 				namespace = "crates",
 			},
 		},
@@ -65,7 +65,7 @@ return {
 									group = "crate",
 								},
 								merge = {
-									glob = false,
+									glob = true,
 								},
 							},
 							-- check = {
@@ -75,6 +75,12 @@ return {
 								experimental = {
 									enable = true,
 								},
+								styleLints = {
+									enable = true,
+								},
+							},
+							interpret = {
+								tests = true,
 							},
 						},
 					},
@@ -82,16 +88,16 @@ return {
 			}
 		end,
 	},
-	{
-		"folke/neoconf.nvim",
-		opts = {
-			import = {
-				vscode = false,
-				coc = false,
-				nlsp = false,
-			},
-		},
-	},
+	-- {
+	-- 	"folke/neoconf.nvim",
+	-- 	opts = {
+	-- 		import = {
+	-- 			vscode = true,
+	-- 			coc = true,
+	-- 			nlsp = true,
+	-- 		},
+	-- 	},
+	-- },
 	{
 		"folke/lazydev.nvim",
 		ft = "lua",
@@ -163,4 +169,9 @@ return {
 			end
 		end,
 	},
+	-- {
+	-- 	"pmizio/typescript-tools.nvim",
+	-- 	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	-- 	opts = {},
+	-- },
 }

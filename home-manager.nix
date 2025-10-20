@@ -123,6 +123,8 @@ in
             mermaid-cli # mermaid diagram rendering
 
             sqlite # snacks.picker frecency
+
+            dotnet-runtime # conform
           ];
           # python
           withPython3 = true;

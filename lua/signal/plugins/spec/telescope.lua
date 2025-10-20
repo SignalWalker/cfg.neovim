@@ -120,6 +120,14 @@ return {
 		opts = {},
 		keys = {
 			-- using snacks.nvim for most of the things you can do with telescope
+			-- VIM
+			{
+				"<Leader>fvo",
+				function()
+					require("telescope.builtin").vim_options()
+				end,
+				desc = "find vim options",
+			},
 		},
 	},
 }
