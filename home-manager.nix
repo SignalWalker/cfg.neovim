@@ -64,67 +64,71 @@ in
           vimdiffAlias = true;
           defaultEditor = true;
           package = ash.package;
-          extraPackages = with pkgs; [
-            luarocks # lazy-rocks
-            lua5_1 # lazy-rocks
+          extraPackages = [
+            pkgs.luarocks # lazy-rocks
+            pkgs.lua5_1 # lazy-rocks
 
-            ripgrep # multi
-            fd # multi
+            pkgs.ripgrep # multi
+            pkgs.fd # multi
 
-            universal-ctags
+            pkgs.universal-ctags
 
-            tree-sitter
-            nodejs_latest # treesitter
-            clang # treesitter, others
+            pkgs.tree-sitter
+            pkgs.nodejs_latest # treesitter
+            pkgs.clang # treesitter, others
 
-            glow # markdown previews
-            fzf
+            pkgs.glow # markdown previews
+            pkgs.fzf
 
-            cargo # blink.nvim
+            pkgs.cargo # blink.nvim, rustowl
+            pkgs.cargo-binstall # rustowl
 
-            cmake # telescope-fzf-native
-            gnumake # telescope-fzf-native
+            pkgs.cmake # telescope-fzf-native
+            pkgs.gnumake # telescope-fzf-native
 
-            imagemagick # 3rd/image.nvim
-            delta # debugloop/telescope-undo.nvim
-            graphviz # rustaceanvim
-            taplo # toml formatting / language server
-            vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
+            pkgs.imagemagick # 3rd/image.nvim
+            pkgs.delta # debugloop/telescope-undo.nvim
+            pkgs.graphviz # rustaceanvim
+            pkgs.taplo # toml formatting / language server
+            pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
 
-            nixd # nix language server
+            pkgs.nixd # nix language server
+            pkgs.nixfmt-rfc-style
+            pkgs.statix # nix linter
 
-            tailwindcss-language-server # css language server
+            pkgs.tailwindcss-language-server # css language server
 
-            vscode-langservers-extracted # json, among other things
+            pkgs.vscode-langservers-extracted # json, among other things
 
-            trash-cli # nvim-tree trash
+            pkgs.trash-cli # nvim-tree trash
 
-            cmake-language-server
+            pkgs.cmake-language-server
 
-            lua-language-server
-            stylua # lua formatting
+            pkgs.lua-language-server
+            pkgs.stylua # lua formatting
 
-            eslint
-            typescript-language-server
+            pkgs.eslint
+            pkgs.typescript-language-server
 
             # snacks.nvim
-            sqlite # picker
+            pkgs.sqlite # picker
+            pkgs.gh # github functions
 
-            nixfmt-rfc-style
+            pkgs.nixfmt-rfc-style
 
-            stylelint
+            pkgs.stylelint
 
-            csharp-ls
-            csharpier # C# formatter
+            pkgs.csharp-ls
+            pkgs.csharpier # C# formatter
 
-            atac # REST API testing
+            pkgs.atac # REST API testing
 
-            tectonic # latex math rendering
-            mermaid-cli # mermaid diagram rendering
+            pkgs.tectonic # latex math rendering
+            pkgs.mermaid-cli # mermaid diagram rendering
 
-            sqlite # snacks.picker frecency
+            pkgs.sqlite # snacks.picker frecency
 
-            dotnet-runtime # conform
+            pkgs.dotnet-runtime # conform
           ];
           # python
           withPython3 = true;

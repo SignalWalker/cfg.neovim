@@ -15,7 +15,18 @@ local get_kopts = function(bufnr)
 	end
 end
 
+local home_dir = vim.env.HOME or "/home/ash"
+local projects_dir = vim.env.XDG_PROJECTS_DIR or (home_dir .. "/projects")
+-- TODO :: make this less brittle
+local sys_flake_path = projects_dir .. "/nix/sys/desktop"
+local sys_flake_expr = '(builtins.getFlake "' .. sys_flake_path .. '")'
+local sys_nixos_expr = sys_flake_expr .. ".nixosConfigurations." .. vim.fn.hostname()
+
 local lsp_cfgs = {
+	-- default config for all language servers
+	["*"] = {
+		root_markers = { ".jj", ".git", "flake.nix" },
+	},
 	["lua_ls"] = {},
 	-- ["tailwindcss"] = {},
 	["taplo"] = {},
@@ -45,9 +56,18 @@ local lsp_cfgs = {
 	},
 	["nixd"] = {
 		settings = {
-			["nixd"] = {
-				formatting = {
-					command = "nix fmt",
+			formatting = {
+				command = "nix fmt",
+			},
+			nixpkgs = {
+				expr = "import " .. sys_flake_expr .. ".inputs.nixpkgs {}",
+			},
+			options = {
+				nixos = {
+					expr = sys_nixos_expr .. ".options",
+				},
+				["home-manager"] = {
+					expr = sys_nixos_expr .. ".options.home-manager.users.type.getSubOptions []",
 				},
 			},
 		},
@@ -56,7 +76,9 @@ local lsp_cfgs = {
 
 for srv, cfg in pairs(lsp_cfgs) do
 	vim.lsp.config(srv, cfg)
-	vim.lsp.enable(srv)
+	if srv ~= "*" then
+		vim.lsp.enable(srv)
+	end
 end
 
 vim.api.nvim_create_autocmd("LspAttach", {

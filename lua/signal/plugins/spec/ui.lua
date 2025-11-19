@@ -44,18 +44,6 @@ return {
 			},
 		},
 	},
-	-- {
-	-- 	"lukas-reineke/indent-blankline.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 	},
-	-- 	main = "ibl",
-	-- 	opts = {
-	-- 		exclude = {
-	-- 			filetypes = { "dashboard" },
-	-- 		},
-	-- 	},
-	-- },
 	{
 		"s1n7ax/nvim-window-picker",
 		lazy = true,

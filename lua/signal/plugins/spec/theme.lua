@@ -29,22 +29,40 @@ end
 -- end
 
 return {
+	-- {
+	-- 	"folke/tokyonight.nvim",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	opts = tokyonight_opts,
+	-- 	keys = {
+	-- 		{ "<Leader>vct", swap_tokyonight, desc = "toggle light/dark theme (tokyonight)" },
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		local tk = require("tokyonight")
+	-- 		tk.setup(opts)
+	-- 	end,
+	-- },
 	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = tokyonight_opts,
-		keys = {
-			{ "<Leader>vct", swap_tokyonight, desc = "toggle light/dark theme (tokyonight)" },
+		"rose-pine/neovim",
+		name = "rose-pine",
+		opts = {
+			dark_variant = "moon",
+			enable = {
+				legacy_highlights = false,
+			},
+			styles = {
+				transparency = true,
+			},
 		},
 		config = function(_, opts)
-			local tk = require("tokyonight")
-			tk.setup(opts)
+			require("rose-pine").setup(opts)
+			-- NOTE :: this is done in theme/init.lua
+			-- vim.cmd([[colorscheme rose-pine]])
 		end,
 	},
 	{
 		"folke/drop.nvim",
-		enabled = not tokyonight_opts["transparent"], -- FIX :: https://github.com/folke/drop.nvim/issues/15
+		enabled = false, -- FIX :: https://github.com/folke/drop.nvim/issues/15
 		event = "VimEnter",
 		opts = {},
 	},

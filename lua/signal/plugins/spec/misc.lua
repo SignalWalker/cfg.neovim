@@ -1,5 +1,13 @@
 return {
 	{
+		"kazimuth/dwarffortress.vim",
+		ft = { "txt" },
+		init = function()
+			vim.g.dwarffortress_always = 0
+			vim.g.dwarffortress_guess = 1
+		end,
+	},
+	{
 		"Eandrju/cellular-automaton.nvim",
 		dependencies = {
 			-- "nvim-treesitter/nvim-treesitter",
@@ -94,6 +102,12 @@ return {
 						{ section = "startup" },
 					},
 				},
+				gh = {
+					enabled = true,
+				},
+				gitbrowse = {
+					enabled = true,
+				},
 				image = {
 					enabled = true,
 				},
@@ -102,6 +116,11 @@ return {
 				},
 				input = {
 					enabled = true,
+				},
+				notifier = {
+					enabled = true,
+					timeout = 2500,
+					style = "fancy",
 				},
 				picker = {
 					enabled = true,
@@ -133,6 +152,15 @@ return {
 		keys = function(_, _)
 			local Snacks = require("snacks")
 			return {
+				-- GITBROWSE
+				{
+					"<Leader>gpr",
+					function()
+						Snacks.gitbrowse()
+					end,
+					desc = "open repo of active file in browser",
+				},
+				-- PICKERS
 				-- PROJECTS
 				{
 					"<Leader>fpp",
@@ -211,6 +239,35 @@ return {
 						Snacks.picker.git_log_file()
 					end,
 					desc = "find in git log for current file",
+				},
+				-- -- GITHUB
+				{
+					"<Leader>fghi",
+					function()
+						Snacks.picker.gh_issue()
+					end,
+					desc = "find in open github issues",
+				},
+				{
+					"<Leader>fghI",
+					function()
+						Snacks.picker.gh_issue({ state = "all" })
+					end,
+					desc = "find in all github issues",
+				},
+				{
+					"<Leader>fghp",
+					function()
+						Snacks.picker.gh_pr()
+					end,
+					desc = "find in open github pull requests",
+				},
+				{
+					"<Leader>fghP",
+					function()
+						Snacks.picker.gh_pr({ state = "all" })
+					end,
+					desc = "find in all github pull requests",
 				},
 				-- FILES
 				{

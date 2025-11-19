@@ -105,26 +105,27 @@ return {
 	-- 		require("telescope").load_extension("projects")
 	-- 	end,
 	-- },
-	{
-		"rcarriga/nvim-notify",
-		lazy = false,
-		opts = {
-			timeout = 2500,
-		},
-		keys = {
-			{
-				"<Leader>fvn",
-				function()
-					require("telescope").extensions.notify.notify()
-				end,
-				desc = "telescope :: notifications",
-			},
-		},
-		config = function(_, opts)
-			require("notify").setup(opts)
-			require("telescope").load_extension("notify")
-		end,
-	},
+	-- {
+	-- 	"rcarriga/nvim-notify",
+	-- 	lazy = false,
+	-- 	opts = {
+	-- 		timeout = 2500,
+	-- 		background_colour = "#000000",
+	-- 	},
+	-- 	keys = {
+	-- 		{
+	-- 			"<Leader>fvn",
+	-- 			function()
+	-- 				require("snacks").picker.notifications()
+	-- 			end,
+	-- 			desc = "find vim notifications",
+	-- 		},
+	-- 	},
+	-- 	config = function(_, opts)
+	-- 		require("notify").setup(opts)
+	-- 		-- require("telescope").load_extension("notify")
+	-- 	end,
+	-- },
 	{
 		"epwalsh/pomo.nvim",
 		version = "*",

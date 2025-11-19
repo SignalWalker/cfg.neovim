@@ -57,9 +57,8 @@ return {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = { "hostname", "branch" },
+					lualine_b = { "hostname", "branch", { "filename", path = 1 } },
 					lualine_c = {
-						{ "filename", path = 1 },
 						{ symbols.get, cond = symbols.has },
 					},
 					lualine_x = {

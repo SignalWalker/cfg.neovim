@@ -88,6 +88,21 @@ return {
 			}
 		end,
 	},
+	{
+		"cordx56/rustowl",
+		version = "*", -- Latest stable version
+		build = "cargo binstall rustowl",
+		lazy = false, -- This plugin is already lazy
+		opts = {
+			client = {
+				on_attach = function(_, buffer)
+					vim.keymap.set("n", "<leader>lro", function()
+						require("rustowl").toggle(buffer)
+					end, { buffer = buffer, desc = "toggle rustowl" })
+				end,
+			},
+		},
+	},
 	-- {
 	-- 	"folke/neoconf.nvim",
 	-- 	opts = {
@@ -154,20 +169,11 @@ return {
 		"https://gitlab.com/HiPhish/guile.vim",
 	},
 	{
+		-- TODO :: does this need any configuration...?
 		"neovim/nvim-lspconfig",
 		dependencies = {},
 		opts = {},
-		config = function(_, opts)
-			local lsp = require("lspconfig")
-
-			opts["nixd"] = {
-				root_dir = lsp.util.root_pattern(".nixd.json", "flake.nix"),
-			}
-
-			for srv, cfg in pairs(opts) do
-				vim.lsp.config(srv, cfg)
-			end
-		end,
+		config = function(_, _) end,
 	},
 	-- {
 	-- 	"pmizio/typescript-tools.nvim",
