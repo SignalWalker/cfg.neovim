@@ -11,6 +11,7 @@
 return {
 	{
 		"jvgrootveld/telescope-zoxide",
+		enabled = false,
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
@@ -70,6 +71,7 @@ return {
 	},
 	{
 		"debugloop/telescope-undo.nvim",
+		enabled = false,
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
 		},
@@ -89,7 +91,7 @@ return {
 				preview_height = 0.8,
 			},
 		},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			local ts = require("telescope")
 			ts.setup({ extensions = { ["undo"] = opts } })
 			ts.load_extension("undo")
@@ -103,7 +105,7 @@ return {
 		},
 		event = "LspAttach",
 		opts = {},
-		config = function(plugin, opts)
+		config = function(_, opts)
 			local ts = require("telescope")
 			ts.setup({ extensions = { ["dap"] = opts } })
 			ts.load_extension("dap")

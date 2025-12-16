@@ -82,6 +82,20 @@ return {
 							interpret = {
 								tests = true,
 							},
+							files = {
+								exclude = {
+									".direnv",
+									".git",
+									".jj",
+									".github",
+									".gitlab",
+									"bin",
+									"node_modules",
+									"target",
+									"venv",
+									".venv",
+								},
+							},
 						},
 					},
 				},

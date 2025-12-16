@@ -144,7 +144,7 @@ return {
 		opts = {
 			plugins = {
 				kitty = {
-					enabled = true,
+					enabled = vim.env.TERM == "xterm-kitty",
 					font = "+4",
 				},
 			},

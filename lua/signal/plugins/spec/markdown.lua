@@ -68,7 +68,7 @@ return {
 				img_folder = "data/img",
 			},
 			follow_url_func = function(url)
-				vim.fn.jobstart({ "xdg-open", url })
+				vim.fn.jobstart({ "app2unit-open", url })
 				vim.notify(
 					"Opened " .. url .. " in external program",
 					vim.log.levels.INFO,

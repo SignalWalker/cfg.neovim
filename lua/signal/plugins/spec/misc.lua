@@ -161,7 +161,7 @@ return {
 					desc = "open repo of active file in browser",
 				},
 				-- PICKERS
-				-- PROJECTS
+				-- -- PROJECTS
 				{
 					"<Leader>fpp",
 					function()
@@ -179,11 +179,18 @@ return {
 				{
 					"<Leader>fpz",
 					function()
-						Snacks.picker.zoxide()
+						Snacks.picker.zoxide({
+							confirm = function(picker, item)
+								picker:close()
+								local dir = item.file
+								vim.cmd.tcd(dir)
+								vim.cmd.edit(dir)
+							end,
+						})
 					end,
 					desc = "find projects (zoxide)",
 				},
-				-- GIT
+				-- -- GIT
 				{
 					"<Leader>fgb",
 					function()
@@ -240,7 +247,7 @@ return {
 					end,
 					desc = "find in git log for current file",
 				},
-				-- -- GITHUB
+				-- -- -- GITHUB
 				{
 					"<Leader>fghi",
 					function()
@@ -269,7 +276,7 @@ return {
 					end,
 					desc = "find in all github pull requests",
 				},
-				-- FILES
+				-- -- FILES
 				{
 					"<Leader>fff",
 					function()
@@ -301,7 +308,7 @@ return {
 					end,
 					desc = "find files (recent)",
 				},
-				-- BUFFERS
+				-- -- BUFFERS
 				{
 					"<Leader>fbb",
 					function()

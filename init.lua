@@ -1,12 +1,3 @@
-vim.opt.runtimepath:append(vim.fn.stdpath("cache")) -- TODO :: Why?
-
-vim.opt.timeoutlen = 500
-
-vim.g.mapleader = ";"
-vim.g.maplocalleader = ";"
-
-math.randomseed() -- TODO :: Why?
-
 require("signal.meta")
 require("signal.lsp")
 require("signal.plugins")

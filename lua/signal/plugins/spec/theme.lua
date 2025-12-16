@@ -44,6 +44,8 @@ return {
 	-- },
 	{
 		"rose-pine/neovim",
+		lazy = false,
+		priority = 1000,
 		name = "rose-pine",
 		opts = {
 			dark_variant = "moon",
@@ -54,11 +56,11 @@ return {
 				transparency = true,
 			},
 		},
-		config = function(_, opts)
-			require("rose-pine").setup(opts)
-			-- NOTE :: this is done in theme/init.lua
-			-- vim.cmd([[colorscheme rose-pine]])
-		end,
+		-- config = function(_, opts)
+		-- 	require("rose-pine").setup(opts)
+		-- 	-- NOTE :: this is done in theme/init.lua
+		-- 	-- vim.cmd([[colorscheme rose-pine]])
+		-- end,
 	},
 	{
 		"folke/drop.nvim",
@@ -85,7 +87,7 @@ return {
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
-			"nvim-telescope/telescope.nvim",
+			-- "nvim-telescope/telescope.nvim",
 		},
 		event = "VeryLazy",
 		opts = {
@@ -128,14 +130,39 @@ return {
 	},
 	{
 		"3rd/image.nvim",
-		lazy = true,
+		-- lazy = true,
+		cond = vim.g.theme_enable_terminal_effects,
 		opts = {
 			backend = "kitty",
+			integrations = {
+				html = {
+					enabled = true,
+				},
+				css = {
+					enabled = true,
+				},
+			},
+		},
+	},
+	{
+		"sphamba/smear-cursor.nvim",
+		cond = vim.g.theme_enable_terminal_effects,
+		event = { "VeryLazy" },
+		opts = {
+			cursor_color = "#ffffff",
+			legacy_computing_symbols_support = true,
+			legacy_computing_symbols_support_vertical_bars = true,
+
+			never_draw_over_target = true,
+
+			particles_enabled = true,
+			particles_over_text = true,
 		},
 	},
 	{
 		"giusgad/pets.nvim",
 		lazy = true,
+		cond = vim.g.theme_enable_terminal_effects,
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			{

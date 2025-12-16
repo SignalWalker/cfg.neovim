@@ -94,14 +94,14 @@ return {
 			{
 				"<Leader>ftc",
 				function()
-					Snacks.picker.todo_comments()
+					require("snacks").picker.todo_comments()
 				end,
 				desc = "find any note comment",
 			},
 			{
 				"<Leader>ftt",
 				function()
-					Snacks.picker.todo_comments({ keywords = { "FIX", "TODO" } })
+					require("snacks").picker.todo_comments({ keywords = { "FIX", "TODO" } })
 				end,
 				desc = "find todo comments",
 			},
@@ -174,9 +174,14 @@ return {
 		opts = {
 			-- log_level = vim.log.levels.TRACE,
 			default_format_opts = {
+				timeout_ms = 3000,
+				async = false,
+				quiet = false,
 				lsp_format = "fallback",
 			},
 			formatters_by_ft = {
+				fish = { "fish_indent" },
+				sh = { "shfmt" },
 				nix = { "nixfmt", lsp_format = "fallback" },
 				css = { "stylelint" },
 				lua = { "stylua" },
@@ -200,16 +205,16 @@ return {
 			require("distant"):setup(opts)
 		end,
 	},
-	{
-		"kylechui/nvim-surround",
-		event = "VeryLazy",
-		opts = {},
-	},
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {},
-	},
+	-- {
+	-- 	"kylechui/nvim-surround",
+	-- 	event = "VeryLazy",
+	-- 	opts = {},
+	-- },
+	-- {
+	-- 	"windwp/nvim-autopairs",
+	-- 	event = "InsertEnter",
+	-- 	opts = {},
+	-- },
 	{
 		"nvim-pack/nvim-spectre",
 		dependencies = {

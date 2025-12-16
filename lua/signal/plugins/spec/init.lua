@@ -6,7 +6,7 @@ return {
 			require("nvim-treesitter.install").update({ with_sync = true })()
 		end,
 		opts = {
-			ensure_installed = { "vim", "lua", "bash", "c", "rust", "regex", "markdown", "markdown_inline" },
+			ensure_installed = { "vim", "lua", "bash", "c", "rust", "regex", "markdown", "markdown_inline", "html" },
 			auto_install = true,
 			highlight = {
 				enable = true,
@@ -15,14 +15,62 @@ return {
 				enable = true,
 			},
 		},
-
-		config = function(plugin, opts)
+		config = function(_, opts)
 			require("nvim-treesitter.configs").setup(opts)
 			vim.o.foldenable = false
 			vim.o.foldmethod = "expr"
 			vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 		end,
 	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+		opts = {
+			move = {
+				enable = true,
+				set_jumps = true, -- whether to set jumps in the jumplist
+				-- LazyVim extention to create buffer-local keymaps
+				keys = {
+					goto_next_start = {
+						["]f"] = "@function.outer",
+						["]c"] = "@class.outer",
+						["]a"] = "@parameter.inner",
+					},
+					goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+					goto_previous_start = {
+						["[f"] = "@function.outer",
+						["[c"] = "@class.outer",
+						["[a"] = "@parameter.inner",
+					},
+					goto_previous_end = {
+						["[F"] = "@function.outer",
+						["[C"] = "@class.outer",
+						["[A"] = "@parameter.inner",
+					},
+				},
+			},
+		},
+	},
+	{
+		"nvim-mini/mini.ai",
+		version = false,
+		opts = {},
+	},
+	{
+		"nvim-mini/mini.surround",
+		version = false,
+		opts = {},
+	},
+	{
+		"nvim-mini/mini.pairs",
+		version = false,
+		opts = {},
+	},
+	-- {
+	-- 	"nvim-mini/mini.operators",
+	-- 	version = false,
+	-- 	opts = {},
+	-- },
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
@@ -128,6 +176,7 @@ return {
 	-- },
 	{
 		"epwalsh/pomo.nvim",
+		enabled = false,
 		version = "*",
 		cmd = { "TimerStart", "TimerRepeat" },
 		dependencies = {
