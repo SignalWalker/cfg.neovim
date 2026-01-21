@@ -75,16 +75,16 @@ in
 
             pkgs.tree-sitter
             pkgs.nodejs_latest # treesitter
-            pkgs.clang # treesitter, others
+            pkgs.clang # treesitter, others # TODO :: what others
 
             pkgs.glow # markdown previews
-            pkgs.fzf
+            pkgs.fzf # TODO :: ???
 
-            pkgs.cargo # blink.nvim, rustowl
-            pkgs.cargo-binstall # rustowl
+            # pkgs.cargo # blink.nvim, rustowl
+            # pkgs.cargo-binstall # rustowl
 
-            pkgs.cmake # telescope-fzf-native
-            pkgs.gnumake # telescope-fzf-native
+            # pkgs.cmake # telescope-fzf-native
+            # pkgs.gnumake # telescope-fzf-native
 
             pkgs.imagemagick # 3rd/image.nvim
             pkgs.delta # debugloop/telescope-undo.nvim
@@ -100,8 +100,6 @@ in
 
             pkgs.vscode-langservers-extracted # json, among other things
 
-            pkgs.trash-cli # nvim-tree trash
-
             pkgs.cmake-language-server
 
             pkgs.lua-language-server
@@ -114,8 +112,6 @@ in
             pkgs.sqlite # picker
             pkgs.gh # github functions
 
-            pkgs.nixfmt-rfc-style
-
             pkgs.stylelint
 
             pkgs.csharp-ls
@@ -125,8 +121,6 @@ in
 
             pkgs.tectonic # latex math rendering
             pkgs.mermaid-cli # mermaid diagram rendering
-
-            pkgs.sqlite # snacks.picker frecency
 
             pkgs.dotnet-runtime # conform
           ];

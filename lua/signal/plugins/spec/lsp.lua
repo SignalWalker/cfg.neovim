@@ -104,8 +104,9 @@ return {
 	},
 	{
 		"cordx56/rustowl",
+		enabled = false,
 		version = "*", -- Latest stable version
-		build = "cargo binstall rustowl",
+		build = "nix shell nixpkgs#cargo nixpkgs#cargo-binstall -c cargo binstall rustowl",
 		lazy = false, -- This plugin is already lazy
 		opts = {
 			client = {
