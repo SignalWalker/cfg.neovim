@@ -61,11 +61,15 @@ return {
 		version = false,
 		opts = {},
 	},
-	{
-		"nvim-mini/mini.pairs",
-		version = false,
-		opts = {},
-	},
+	-- 	{
+	-- 		"nvim-mini/mini.pairs",
+	-- 		version = false,
+	-- 		opts = {},
+	-- 		config = function(_, opts)
+	-- 			local MiniPairs = require("mini.pairs")
+	-- 			MiniPairs.setup(opts)
+	-- 		end
+	-- 	},
 	-- {
 	-- 	"nvim-mini/mini.operators",
 	-- 	version = false,
@@ -76,8 +80,8 @@ return {
 		event = "VeryLazy",
 		-- stylua: ignore
 		keys = {
-			{ "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash :: jump" },
-			{ "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash :: treesitter" },
+			{ "<C-s>", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash :: jump" },
+			{ "<C-M-S>", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash :: treesitter" },
 			{ "r", mode = "o", function() require("flash").remote() end, desc = "flash :: remote" },
 			{ "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "flash :: treesitter search" },
 			{ "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "flash :: toggle search" }
