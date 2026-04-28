@@ -7,8 +7,12 @@ end
 return {
 	{
 		"saghen/blink.cmp",
-		dependencies = { "rafamadriz/friendly-snippets" },
-		build = "nix run .#build-plugin",
+		version = "1.*",
+		dependencies = {
+			-- "saghen/blink.lib",
+			"rafamadriz/friendly-snippets",
+		},
+		build = "nix run --accept-flake-config .#build-plugin",
 		opts = {
 			keymap = { preset = "super-tab" },
 			completion = {
