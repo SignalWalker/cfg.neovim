@@ -16,7 +16,7 @@ in
       package = mkOption {
         type = types.package;
         # FIX :: restore neovim nightly (build error as of 2024-07-29)
-        # default = inputs.neovim.packages.${pkgs.system}.neovim or pkgs.neovim-unwrapped;
+        # default = inputs.neovim.packages.${pkgs.stdenv.hostPlatform.system}.neovim or pkgs.neovim-unwrapped;
         default = pkgs.neovim-unwrapped;
       };
       # package = mkPackageOption pkgs "neovim-unwrapped" {};
@@ -59,6 +59,7 @@ in
         };
         programs.neovim = {
           enable = true;
+          sideloadInitLua = true;
           viAlias = true;
           vimAlias = true;
           vimdiffAlias = true;
@@ -93,7 +94,7 @@ in
             pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter # nvim-dap
 
             pkgs.nixd # nix language server
-            pkgs.nixfmt-rfc-style
+            pkgs.nixfmt
             pkgs.statix # nix linter
 
             pkgs.tailwindcss-language-server # css language server
@@ -131,6 +132,8 @@ in
           extraLuaPackages = luaPkgs: [
             luaPkgs.magick # 3rd/image.nvim
           ];
+
+          withRuby = false;
 
           coc.enable = false;
         };

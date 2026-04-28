@@ -9,16 +9,15 @@
   };
   outputs =
     inputs@{ nixpkgs, ... }:
-    with builtins;
     let
-      std = nixpkgs.lib;
+      lib = nixpkgs.lib;
       systems = [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-darwin"
         "x86_64-linux"
       ];
-      nixpkgsFor = std.genAttrs systems (
+      nixpkgsFor = lib.genAttrs systems (
         system:
         import nixpkgs {
           localSystem = builtins.currentSystem or system;
@@ -28,7 +27,7 @@
       );
     in
     {
-      formatter = std.mapAttrs (system: pkgs: pkgs.nixfmt-rfc-style) nixpkgsFor;
+      formatter = lib.mapAttrs (system: pkgs: pkgs.nixfmt) nixpkgsFor;
       homeManagerModules.default = import ./home-manager.nix inputs;
       nixosModules.default = import ./nixos-module.nix;
       overlays.default = inputs.neovim.overlay;
