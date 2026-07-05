@@ -20,31 +20,6 @@ return {
 		opts = {},
 	},
 	{
-		"mrjones2014/legendary.nvim",
-		version = "^2",
-		dependencies = {
-			"kkharji/sqlite.lua",
-		},
-		priority = 10000,
-		lazy = false,
-		opts = {
-			extensions = {
-				lazy_nvim = true,
-				which_key = { auto_register = true },
-				nvim_tree = true,
-				diffview = true,
-				smart_splits = {
-					directions = { "h", "j", "k", "l" },
-					mods = {
-						move = "<M>",
-						resize = "<C>",
-						swap = "<M-S>",
-					},
-				},
-			},
-		},
-	},
-	{
 		"s1n7ax/nvim-window-picker",
 		lazy = true,
 		version = "^2",
@@ -97,11 +72,80 @@ return {
 	},
 	{
 		"mrjones2014/smart-splits.nvim",
+		lazy = false,
 		dependencies = {
 			"kwkarlwang/bufresize.nvim",
 		},
-		version = "^1",
+		version = "^2",
 		build = "./kitty/install-kittens.bash",
+		keys = function(_, _)
+			local splits = require("smart-splits")
+			return {
+				-- ---- MOVE ----
+				{
+					"<M-h>",
+					splits.move_cursor_left,
+					desc = "focus buffer left",
+				},
+				{
+					"<M-j>",
+					splits.move_cursor_down,
+					desc = "focus buffer down",
+				},
+				{
+					"<M-k>",
+					splits.move_cursor_up,
+					desc = "focus buffer up",
+				},
+				{
+					"<M-l>",
+					splits.move_cursor_right,
+					desc = "focus buffer right",
+				},
+				-- ---- RESIZE ----
+				{
+					"<C-h>",
+					splits.resize_left,
+					desc = "resize buffer left",
+				},
+				{
+					"<C-j>",
+					splits.resize_down,
+					desc = "resize buffer down",
+				},
+				{
+					"<C-k>",
+					splits.resize_up,
+					desc = "resize buffer up",
+				},
+				{
+					"<C-l>",
+					splits.resize_right,
+					desc = "resize buffer right",
+				},
+				-- ---- SWAP ----
+				{
+					"<M-S-h>",
+					splits.swap_buf_left,
+					desc = "swap buffer left",
+				},
+				{
+					"<M-S-j>",
+					splits.swap_buf_down,
+					desc = "swap buffer down",
+				},
+				{
+					"<M-S-k>",
+					splits.swap_buf_up,
+					desc = "swap buffer up",
+				},
+				{
+					"<M-S-l>",
+					splits.swap_buf_right,
+					desc = "swap buffer right",
+				},
+			}
+		end,
 		opts = function()
 			return {
 				ignored_buftypes = {

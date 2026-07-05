@@ -255,15 +255,16 @@ return {
 			},
 		},
 	},
-	{
-		"Olical/conjure",
-		dependencies = { "PaterJason/cmp-conjure" },
-		lazy = true,
-		ft = { "clojure", "fennel", "guile" },
-	},
+	-- {
+	-- 	"Olical/conjure",
+	-- 	dependencies = { "PaterJason/cmp-conjure" },
+	-- 	lazy = true,
+	-- 	ft = { "clojure", "fennel", "guile" },
+	-- },
 	{
 		"NachoNievaG/atac.nvim",
 		dependencies = { "akinsho/toggleterm.nvim" },
+		cmd = { "Atac" },
 		opts = {
 			dir = "/tmp/atac",
 		},

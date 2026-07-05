@@ -8,50 +8,6 @@ return {
 		end,
 	},
 	{
-		"Eandrju/cellular-automaton.nvim",
-		dependencies = {
-			-- "nvim-treesitter/nvim-treesitter",
-		},
-		cmd = { "CellularAutomaton" },
-		keys = {
-			{ "<Leader>bcg", "<cmd>CellularAutomaton make_it_rain<cr>", desc = "enable gravity" },
-			{ "<Leader>bcl", "<cmd>CellularAutomaton game_of_life<cr>", desc = "enable life" },
-		},
-	},
-	{
-		"rktjmp/playtime.nvim",
-		cmd = { "Playtime" },
-		opts = {},
-	},
-	{
-		"lbrayner/vim-rzip",
-	},
-	-- {
-	-- 	"bxrne/was.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 	},
-	-- 	keys = {
-	-- 		{
-	-- 			"<Leader>pw",
-	-- 			"<cmd>Was<cr>",
-	-- 			desc = "show last intent for this project",
-	-- 		},
-	-- 		{
-	-- 			"<Leader>pW",
-	-- 			function()
-	-- 				local intent = vim.fn.input({ prompt = "Intent" })
-	-- 				if not intent or intent == "" then
-	-- 					return
-	-- 				end
-	-- 				vim.cmd.Was(intent)
-	-- 			end,
-	-- 			desc = "set last intent for this project",
-	-- 		},
-	-- 	},
-	-- 	opts = {},
-	-- },
-	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,

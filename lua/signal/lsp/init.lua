@@ -26,6 +26,10 @@ local lsp_cfgs = {
 	-- default config for all language servers
 	["*"] = {
 		root_markers = { ".jj", ".git", "flake.nix" },
+		before_init = function(_, config)
+			local codesettings = require("codesettings")
+			codesettings.with_local_settings(config.name, config)
+		end,
 	},
 	["lua_ls"] = {},
 	-- ["tailwindcss"] = {},

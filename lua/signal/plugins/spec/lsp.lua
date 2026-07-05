@@ -38,8 +38,15 @@ return {
 		},
 	},
 	{
+		"mrjones2014/codesettings.nvim",
+		-- You don't need to lazy load this plugin since it already
+		-- lazy loads its constituent parts via `plugin/*` and `ftplugin/*` files
+		lazy = false,
+		opts = {},
+	},
+	{
 		"mrcjkb/rustaceanvim",
-		version = "^6",
+		version = "^9",
 		lazy = false, -- handles laziness itself, apparently
 		ft = { "rust" },
 		init = function()
