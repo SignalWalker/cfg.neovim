@@ -65,19 +65,27 @@ return {
 					standalone = false,
 					default_settings = {
 						["rust-analyzer"] = {
+							assist = {
+								preferSelf = true,
+							},
 							imports = {
 								prefix = "crate",
 								granularity = {
 									enforce = true,
 									group = "crate",
 								},
-								merge = {
-									glob = true,
+								preferPrelude = true,
+							},
+							completion = {
+								autoimport = {
+									exclude = {
+										{
+											path = "futures::future::Future",
+											type = "always",
+										},
+									},
 								},
 							},
-							-- check = {
-							-- 	command = "clippy",
-							-- },
 							diagnostics = {
 								experimental = {
 									enable = true,
@@ -88,6 +96,27 @@ return {
 							},
 							interpret = {
 								tests = true,
+							},
+							inlayHints = {
+								bindingModeHints = {
+									enable = true,
+								},
+								closureCaptureHints = {
+									enable = true,
+								},
+								discriminantHints = {
+									enable = true,
+								},
+							},
+							references = {
+								excludeImports = true,
+							},
+							semanticHighlighting = {
+								operator = {
+									specialization = {
+										enable = true,
+									},
+								},
 							},
 							files = {
 								exclude = {
