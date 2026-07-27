@@ -42,7 +42,9 @@ return {
 		-- You don't need to lazy load this plugin since it already
 		-- lazy loads its constituent parts via `plugin/*` and `ftplugin/*` files
 		lazy = false,
-		opts = {},
+		opts = {
+			live_reload = true,
+		},
 	},
 	{
 		"mrcjkb/rustaceanvim",
